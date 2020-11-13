@@ -6,11 +6,18 @@ using System.Text;
 namespace EP.DO.Objects
 {
     public class Universidad
-    { 
-        [Key]
-        public int idUniversidad { get; set; }
+    {
+        public Universidad()
+        {
+            Carrera = new HashSet<Carrera>();
+            ProfUniversidad = new HashSet<ProfUniversidad>();
+        }
 
-        [Required]
-        public String nombreUniversidad { get; set; } 
+        [Key]
+        public int IdUniversidad { get; set; }
+        public string NombreUniversidad { get; set; }
+
+        public virtual ICollection<Carrera> Carrera { get; set; }
+        public virtual ICollection<ProfUniversidad> ProfUniversidad { get; set; }
     }
 }
