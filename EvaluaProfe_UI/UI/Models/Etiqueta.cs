@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace UI.Models
 {
@@ -10,6 +11,7 @@ namespace UI.Models
             CalEtiqueta = new HashSet<CalEtiqueta>();
         }
 
+        [Key]
         public int IdEtiqueta { get; set; }
         public string NombreEtiqueta { get; set; }
 

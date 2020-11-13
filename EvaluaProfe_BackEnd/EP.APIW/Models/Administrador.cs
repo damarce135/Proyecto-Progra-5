@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UI.Models
+#nullable disable
+
+namespace EP.APIW.Models
 {
     public partial class Administrador
     {

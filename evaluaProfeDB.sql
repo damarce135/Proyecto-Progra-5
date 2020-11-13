@@ -8,7 +8,7 @@ use evaluaProfe; --Paso 2
 /* CREAR TABLAS */
 --Crear tabla administrador 
 create table administrador ( 
-idAdministrador int primary key,  
+idAdministrador int identity(1,1) primary key,  
 nombre varchar(45), 
 apellido1 varchar(45), 
 apellido2 varchar(45), 
@@ -21,7 +21,7 @@ habilitado bit
 
 --Crear tabla profesor 
 create table profesor ( 
-idProfesor int primary key, 
+idProfesor int identity(1,1) primary key, 
 nombre varchar(45), 
 apellido1 varchar(45), 
 apellido2 varchar(45) 
@@ -30,14 +30,14 @@ apellido2 varchar(45)
 
 --Crear tabla universidad 
 create table universidad ( 
-idUniversidad int primary key, 
+idUniversidad int identity(1,1) primary key, 
 nombreUniversidad varchar(200), 
 ); 
 
 
 --Crear tabla carrera 
 create table carrera ( 
-idCarrera int primary key, 
+idCarrera int identity(1,1) primary key, 
 nombreCarrera varchar(200), 
 idUniversidad int 
 ); 
@@ -45,14 +45,14 @@ idUniversidad int
 
 --Crear tabla curso 
 create table curso ( 
-idCurso int primary key, 
+idCurso int identity(1,1) primary key, 
 nombreCurso varchar(200), 
 ); 
 
 
 --Crear tabla calificacion
 create table calificacion ( 
-idCalificacion int primary key, 
+idCalificacion int identity(1,1) primary key, 
 idProfesor int, 
 idCurso int, 
 facilidad tinyint, 
@@ -67,7 +67,7 @@ calificacion tinyint
 
 --Crear tabla cursoCarrera 
 create table cursoCarrera ( 
-idCursoCarrera int primary key, 
+idCursoCarrera int identity(1,1) primary key, 
 idCurso int, 
 idCarrera int 
 ); 
@@ -75,7 +75,7 @@ idCarrera int
 
 --Crear tabla profUniversidad 
 create table profUniversidad ( 
-idProfUniversidad int primary key, 
+idProfUniversidad int identity(1,1) primary key, 
 idProfesor int, 
 idUniversidad int 
 ); 
@@ -83,7 +83,7 @@ idUniversidad int
 
 --Crear tabla profCurso 
 create table profCurso ( 
-idProfCurso int primary key, 
+idProfCurso int identity(1,1) primary key, 
 idProfesor int, 
 idCurso int 
 ); 
@@ -91,14 +91,14 @@ idCurso int
 
 --Crear tabla etiquetas 
 create table etiqueta ( 
-idEtiqueta int primary key, 
+idEtiqueta int identity(1,1) primary key, 
 nombreEtiqueta varchar(50) 
 ); 
 
 
 --Crear tabla calEtiquetas 
 create table calEtiqueta ( 
-idCalEtiqueta int primary key, 
+idCalEtiqueta int identity(1,1) primary key, 
 idCalificacion int, 
 idEtiqueta int 
 ); 

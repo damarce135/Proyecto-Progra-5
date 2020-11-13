@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace UI.Models
 {
@@ -12,6 +13,7 @@ namespace UI.Models
             ProfUniversidad = new HashSet<ProfUniversidad>();
         }
 
+        [Key]
         public int IdProfesor { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }

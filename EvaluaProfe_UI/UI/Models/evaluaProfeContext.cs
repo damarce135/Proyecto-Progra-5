@@ -15,7 +15,7 @@ namespace UI.Models
         {
         }
 
-        public virtual DbSet<Administrador> Administrador { get; set; }
+        //public virtual DbSet<Administrador> Administrador { get; set; }
         public virtual DbSet<CalEtiqueta> CalEtiqueta { get; set; }
         public virtual DbSet<Calificacion> Calificacion { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
@@ -38,48 +38,7 @@ namespace UI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Administrador>(entity =>
-            {
-                entity.HasKey(e => e.IdAdministrador)
-                    .HasName("PK__administ__EBE80EA17D213B28");
-
-                entity.ToTable("administrador");
-
-                entity.Property(e => e.IdAdministrador)
-                    .HasColumnName("idAdministrador")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Apellido1)
-                    .HasColumnName("apellido1")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Apellido2)
-                    .HasColumnName("apellido2")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Contrasena)
-                    .HasColumnName("contrasena")
-                    .HasMaxLength(1);
-
-                entity.Property(e => e.Email)
-                    .HasColumnName("email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Habilitado).HasColumnName("habilitado");
-
-                entity.Property(e => e.Nombre)
-                    .HasColumnName("nombre")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Telefono)
-                    .HasColumnName("telefono")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-            });
+           
 
             modelBuilder.Entity<CalEtiqueta>(entity =>
             {
