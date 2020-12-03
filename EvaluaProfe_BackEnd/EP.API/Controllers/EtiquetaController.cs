@@ -11,27 +11,27 @@ namespace EP.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UniversidadController : ControllerBase
+    public class EtiquetaController : ControllerBase
     {
         private readonly SolutionDBContext _context;
 
-        public UniversidadController(SolutionDBContext context)
+        public EtiquetaController(SolutionDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Universidad
+        // GET: api/Etiqueta
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<data.Universidad>>> GetUniversidad()
+        public async Task<ActionResult<IEnumerable<data.Etiqueta>>> GetEtiqueta()
         {
-            return new BS.Universidad(_context).GetAll().ToList();
+            return new BS.Etiqueta(_context).GetAll().ToList();
         }
 
-        // GET: api/Universidad/5
+        // GET: api/Etiqueta/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<data.Universidad>> GetUniversidad(int id)
+        public async Task<ActionResult<data.Etiqueta>> GetEtiqueta(int id)
         {
-            var universidad = new BS.Universidad(_context).GetOneById(id);
+            var universidad = new BS.Etiqueta(_context).GetOneById(id);
 
             if (universidad == null)
             {
@@ -41,13 +41,13 @@ namespace EP.API.Controllers
             return universidad;
         }
 
-        // PUT: api/Universidad/5
+        // PUT: api/Etiqueta/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUniversidad(int id, data.Universidad universidad)
+        public async Task<IActionResult> PutEtiqueta(int id, data.Etiqueta universidad)
         {
-            if (id != universidad.IdUniversidad)
+            if (id != universidad.IdEtiqueta)
             {
                 return BadRequest();
             }
@@ -56,11 +56,11 @@ namespace EP.API.Controllers
 
             try
             {
-                new BS.Universidad(_context).Update(universidad);
+                new BS.Etiqueta(_context).Update(universidad);
             }
             catch (Exception)
             {
-                if (!UniversidadExists(id))
+                if (!EtiquetaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,35 +73,35 @@ namespace EP.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Universidad
+        // POST: api/Etiqueta
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<data.Universidad>> PostUniversidad(data.Universidad universidad)
+        public async Task<ActionResult<data.Etiqueta>> PostEtiqueta(data.Etiqueta universidad)
         {
-            new BS.Universidad(_context).Insert(universidad);
+            new BS.Etiqueta(_context).Insert(universidad);
 
-            return CreatedAtAction("GetUniversidad", new { id = universidad.IdUniversidad }, universidad);
+            return CreatedAtAction("GetEtiqueta", new { id = universidad.IdEtiqueta }, universidad);
         }
 
-        // DELETE: api/Universidad/5
+        // DELETE: api/Etiqueta/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<data.Universidad>> DeleteUniversidad(int id)
+        public async Task<ActionResult<data.Etiqueta>> DeleteEtiqueta(int id)
         {
-            var universidad = new BS.Universidad(_context).GetOneById(id);
+            var universidad = new BS.Etiqueta(_context).GetOneById(id);
             if (universidad == null)
             {
                 return NotFound();
             }
 
-            new BS.Universidad(_context).Delete(universidad);
+            new BS.Etiqueta(_context).Delete(universidad);
 
             return universidad;
         }
 
-        private bool UniversidadExists(int id)
+        private bool EtiquetaExists(int id)
         {
-            return (new BS.Universidad(_context).GetOneById(id) != null);
+            return (new BS.Etiqueta(_context).GetOneById(id) != null);
         }
     }
 }

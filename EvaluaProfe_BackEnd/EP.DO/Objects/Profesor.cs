@@ -11,7 +11,6 @@ namespace EP.DO.Objects
         {
             Calificacion = new HashSet<Calificacion>();
             ProfCurso = new HashSet<ProfCurso>();
-            ProfUniversidad = new HashSet<ProfUniversidad>();
         }
 
         [Key]
@@ -22,6 +21,5 @@ namespace EP.DO.Objects
 
         public virtual ICollection<Calificacion> Calificacion { get; set; }
         public virtual ICollection<ProfCurso> ProfCurso { get; set; }
-        public virtual ICollection<ProfUniversidad> ProfUniversidad { get; set; }
     }
 }

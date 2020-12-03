@@ -14,10 +14,6 @@ namespace EP.DAL.EF
 
         }
 
-        public DbSet<Universidad> Universidad { get; set; }
-
-        public DbSet<ProfUniversidad> ProfUniversidades { get; set; }
-
         public DbSet<Profesor> Profesors { get; set; }
 
         public DbSet<ProfCurso> ProfCursos { get; set; }
