@@ -23,9 +23,7 @@ namespace UI.Models
         public virtual DbSet<CursoCarrera> CursoCarrera { get; set; }
         public virtual DbSet<Etiqueta> Etiqueta { get; set; }
         public virtual DbSet<ProfCurso> ProfCurso { get; set; }
-        public virtual DbSet<ProfUniversidad> ProfUniversidad { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
-        public virtual DbSet<Universidad> Universidad { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -120,17 +118,11 @@ namespace UI.Models
                     .HasColumnName("idCarrera")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.IdUniversidad).HasColumnName("idUniversidad");
-
                 entity.Property(e => e.NombreCarrera)
                     .HasColumnName("nombreCarrera")
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.IdUniversidadNavigation)
-                    .WithMany(p => p.Carrera)
-                    .HasForeignKey(d => d.IdUniversidad)
-                    .HasConstraintName("FK__carrera__idUnive__49C3F6B7");
             });
 
             modelBuilder.Entity<Curso>(entity =>
@@ -219,31 +211,6 @@ namespace UI.Models
                     .HasConstraintName("FK__profCurso__idPro__5070F446");
             });
 
-            modelBuilder.Entity<ProfUniversidad>(entity =>
-            {
-                entity.HasKey(e => e.IdProfUniversidad)
-                    .HasName("PK__profUniv__2ADE96A6A7B9BC2C");
-
-                entity.ToTable("profUniversidad");
-
-                entity.Property(e => e.IdProfUniversidad)
-                    .HasColumnName("idProfUniversidad")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdProfesor).HasColumnName("idProfesor");
-
-                entity.Property(e => e.IdUniversidad).HasColumnName("idUniversidad");
-
-                entity.HasOne(d => d.IdProfesorNavigation)
-                    .WithMany(p => p.ProfUniversidad)
-                    .HasForeignKey(d => d.IdProfesor)
-                    .HasConstraintName("FK__profUnive__idPro__4E88ABD4");
-
-                entity.HasOne(d => d.IdUniversidadNavigation)
-                    .WithMany(p => p.ProfUniversidad)
-                    .HasForeignKey(d => d.IdUniversidad)
-                    .HasConstraintName("FK__profUnive__idUni__4F7CD00D");
-            });
 
             modelBuilder.Entity<Profesor>(entity =>
             {
@@ -272,23 +239,7 @@ namespace UI.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Universidad>(entity =>
-            {
-                entity.HasKey(e => e.IdUniversidad)
-                    .HasName("PK__universi__AFB9D2241790CC02");
-
-                entity.ToTable("universidad");
-
-                entity.Property(e => e.IdUniversidad)
-                    .HasColumnName("idUniversidad")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.NombreUniversidad)
-                    .HasColumnName("nombreUniversidad")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-            });
-
+            
             OnModelCreatingPartial(modelBuilder);
         }
 

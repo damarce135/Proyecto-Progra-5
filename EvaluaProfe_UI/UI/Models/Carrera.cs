@@ -14,9 +14,7 @@ namespace UI.Models
         [Key]
         public int IdCarrera { get; set; }
         public string NombreCarrera { get; set; }
-        public int IdUniversidad { get; set; }
 
-        public virtual Universidad IdUniversidadNavigation { get; set; }
         public virtual ICollection<CursoCarrera> CursoCarrera { get; set; }
     }
 }

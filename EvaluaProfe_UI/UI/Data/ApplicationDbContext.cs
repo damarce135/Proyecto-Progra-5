@@ -13,8 +13,7 @@ namespace UI.Data
             : base(options)
         {
         }
-        public DbSet<UI.Models.Universidad> Universidad { get; set; }
-        public DbSet<UI.Models.ProfUniversidad> ProfUniversidad { get; set; }
+        
         public DbSet<UI.Models.Profesor> Profesor { get; set; }
         public DbSet<UI.Models.ProfCurso> ProfCurso { get; set; }
         public DbSet<UI.Models.Etiqueta> Etiqueta { get; set; }

@@ -10,7 +10,6 @@ namespace UI.Models
         {
             Calificacion = new HashSet<Calificacion>();
             ProfCurso = new HashSet<ProfCurso>();
-            ProfUniversidad = new HashSet<ProfUniversidad>();
         }
 
         [Key]
@@ -21,6 +20,5 @@ namespace UI.Models
 
         public virtual ICollection<Calificacion> Calificacion { get; set; }
         public virtual ICollection<ProfCurso> ProfCurso { get; set; }
-        public virtual ICollection<ProfUniversidad> ProfUniversidad { get; set; }
     }
 }

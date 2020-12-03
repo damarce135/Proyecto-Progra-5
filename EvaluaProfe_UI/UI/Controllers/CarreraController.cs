@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using UI.Data;
 using UI.Models;
 
 namespace UI.Controllers
@@ -63,7 +62,7 @@ namespace UI.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCarrera,NombreCarrera,IdCarrera")] Carrera carrera)
+        public async Task<IActionResult> Create([Bind("IdCarrera,NombreCarrera")] Carrera carrera)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +105,7 @@ namespace UI.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCarrera,NombreCarrera,IdCarrera")] Carrera carrera)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCarrera,NombreCarrera")] Carrera carrera)
         {
             if (id != carrera.IdCarrera)
             {
