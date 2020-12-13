@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EP.DAL.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,51 +15,55 @@ namespace EP.API.Controllers
     public class CursoController : ControllerBase
     {
         private readonly SolutionDBContext _context;
+        private readonly IMapper _mapper;
 
-        public CursoController(SolutionDBContext context)
+        public CursoController(SolutionDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/Curso
+        // GET: api/Cursos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<data.Curso>>> GetCurso()
+        public async Task<ActionResult<IEnumerable<Models.Curso>>> GetCursos()
         {
-            return new BS.Curso(_context).GetAll().ToList();
+            var result = new BS.Curso(_context).GetAll().ToList();
+            var aux = _mapper.Map<IEnumerable<data.Curso>, IEnumerable<Models.Curso>>(result);
+            return aux.ToList();
         }
 
-        // GET: api/Curso/5
+        // GET: api/Cursos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<data.Curso>> GetCurso(int id)
+        public async Task<ActionResult<Models.Curso>> GetCurso(int id)
         {
-            var universidad = new BS.Curso(_context).GetOneById(id);
+            var curso = new BS.Curso(_context).GetOneById(id);
+            var aux = _mapper.Map<data.Curso, Models.Curso>(curso);
 
-            if (universidad == null)
+            if (aux == null)
             {
                 return NotFound();
             }
 
-            return universidad;
+            return aux;
         }
 
-        // PUT: api/Curso/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // PUT: api/Cursos/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurso(int id, data.Curso universidad)
+        public async Task<IActionResult> PutCurso(int id, Models.Curso curso)
         {
-            if (id != universidad.IdCurso)
+            if (id != curso.IdCurso)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(universidad).State = EntityState.Modified;
-
             try
             {
-                new BS.Curso(_context).Update(universidad);
+                var aux = _mapper.Map<Models.Curso, data.Curso>(curso);
+                new BS.Curso(_context).Update(aux);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
                 if (!CursoExists(id))
                 {
@@ -73,30 +78,32 @@ namespace EP.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Curso
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: api/Cursos
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<data.Curso>> PostCurso(data.Curso universidad)
+        public async Task<ActionResult<Models.Curso>> PostCurso(Models.Curso curso)
         {
-            new BS.Curso(_context).Insert(universidad);
+            var aux = _mapper.Map<Models.Curso, data.Curso>(curso);
+            new BS.Curso(_context).Insert(aux);
 
-            return CreatedAtAction("GetCurso", new { id = universidad.IdCurso }, universidad);
+            return CreatedAtAction("GetCurso", new { id = curso.IdCurso }, curso);
         }
 
-        // DELETE: api/Curso/5
+        // DELETE: api/Cursos/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<data.Curso>> DeleteCurso(int id)
+        public async Task<ActionResult<Models.Curso>> DeleteCurso(int id)
         {
-            var universidad = new BS.Curso(_context).GetOneById(id);
-            if (universidad == null)
+            var curso = new BS.Curso(_context).GetOneById(id);
+            var aux = _mapper.Map<data.Curso, Models.Curso>(curso);
+            if (curso == null)
             {
                 return NotFound();
             }
 
-            new BS.Curso(_context).Delete(universidad);
+            new BS.Curso(_context).Delete(curso);
 
-            return universidad;
+            return aux;
         }
 
         private bool CursoExists(int id)

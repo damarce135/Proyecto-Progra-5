@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EP.DO.Objects
+namespace EP.API.Models
 {
     public class Calificacion
     {
+        //public Calificacion()
+        //{
+        //    CalEtiqueta = new HashSet<CalEtiqueta>();
+        //    Etiqueta = new HashSet<Etiqueta>();
+        //}
 
         [Key]
         public int IdCalificacion { get; set; }
@@ -21,13 +25,11 @@ namespace EP.DO.Objects
         public bool Recomienda { get; set; }
         public byte Calificacion1 { get; set; }
 
-        [ForeignKey("IdCurso")]
-        public Curso Curso { get; set; }
-
-        [ForeignKey("IdProfesor")]
-        public Profesor Profesor { get; set; }
-
-        public ICollection<CalEtiqueta> CalEtiquetas { get; set; }
-        public ICollection<Etiqueta> Etiquetas { get; set; }
+        //public virtual Curso IdCursoNavigation { get; set; }
+        //public virtual Profesor IdProfesorNavigation { get; set; }
+        //public virtual ICollection<CalEtiqueta> CalEtiqueta { get; set; }
+        //public virtual ICollection<Etiqueta> Etiqueta { get; set; }
+        //public virtual Curso Curso { get; set; }
+        //public virtual Profesor Profesor { get; set; }
     }
 }

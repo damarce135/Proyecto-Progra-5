@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EP.DO.Objects
+namespace EP.API.Models
 {
     public class CursoCarrera
     {
@@ -13,10 +12,7 @@ namespace EP.DO.Objects
         public int IdCurso { get; set; }
         public int IdCarrera { get; set; }
 
-        [ForeignKey("IdCarrera")]
-        public virtual Carrera Carrera { get; set; }
-
-        [ForeignKey("IdCurso")]
-        public virtual Curso Curso { get; set; }
+        //public virtual Carrera IdCarreraNavigation { get; set; }
+        //public virtual Curso IdCursoNavigation { get; set; }
     }
 }

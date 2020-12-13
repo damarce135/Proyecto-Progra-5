@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EP.DAL.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,51 +15,55 @@ namespace EP.API.Controllers
     public class CalEtiquetaController : ControllerBase
     {
         private readonly SolutionDBContext _context;
+        private readonly IMapper _mapper;
 
-        public CalEtiquetaController(SolutionDBContext context)
+        public CalEtiquetaController(SolutionDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/CalEtiqueta
+        // GET: api/CalEtiquetas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<data.CalEtiqueta>>> GetCalEtiqueta()
+        public async Task<ActionResult<IEnumerable<Models.CalEtiqueta>>> GetCalEtiquetas()
         {
-            return new BS.CalEtiqueta(_context).GetAll().ToList();
+            var result = new BS.CalEtiqueta(_context).GetAll().ToList();
+            var aux = _mapper.Map<IEnumerable<data.CalEtiqueta>, IEnumerable<Models.CalEtiqueta>>(result);
+            return aux.ToList();
         }
 
-        // GET: api/CalEtiqueta/5
+        // GET: api/CalEtiquetas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<data.CalEtiqueta>> GetCalEtiqueta(int id)
+        public async Task<ActionResult<Models.CalEtiqueta>> GetCalEtiqueta(int id)
         {
-            var universidad = new BS.CalEtiqueta(_context).GetOneById(id);
+            var calEtiqueta = new BS.CalEtiqueta(_context).GetOneById(id);
+            var aux = _mapper.Map<data.CalEtiqueta, Models.CalEtiqueta>(calEtiqueta);
 
-            if (universidad == null)
+            if (aux == null)
             {
                 return NotFound();
             }
 
-            return universidad;
+            return aux;
         }
 
-        // PUT: api/CalEtiqueta/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // PUT: api/CalEtiquetas/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCalEtiqueta(int id, data.CalEtiqueta universidad)
+        public async Task<IActionResult> PutCalEtiqueta(int id, Models.CalEtiqueta calEtiqueta)
         {
-            if (id != universidad.IdCalEtiqueta)
+            if (id != calEtiqueta.IdCalEtiqueta)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(universidad).State = EntityState.Modified;
-
             try
             {
-                new BS.CalEtiqueta(_context).Update(universidad);
+                var aux = _mapper.Map<Models.CalEtiqueta, data.CalEtiqueta>(calEtiqueta);
+                new BS.CalEtiqueta(_context).Update(aux);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
                 if (!CalEtiquetaExists(id))
                 {
@@ -73,30 +78,32 @@ namespace EP.API.Controllers
             return NoContent();
         }
 
-        // POST: api/CalEtiqueta
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: api/CalEtiquetas
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<data.CalEtiqueta>> PostCalEtiqueta(data.CalEtiqueta universidad)
+        public async Task<ActionResult<Models.CalEtiqueta>> PostCalEtiqueta(Models.CalEtiqueta calEtiqueta)
         {
-            new BS.CalEtiqueta(_context).Insert(universidad);
+            var aux = _mapper.Map<Models.CalEtiqueta, data.CalEtiqueta>(calEtiqueta);
+            new BS.CalEtiqueta(_context).Insert(aux);
 
-            return CreatedAtAction("GetCalEtiqueta", new { id = universidad.IdCalEtiqueta }, universidad);
+            return CreatedAtAction("GetCalEtiqueta", new { id = calEtiqueta.IdCalEtiqueta }, calEtiqueta);
         }
 
-        // DELETE: api/CalEtiqueta/5
+        // DELETE: api/CalEtiquetas/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<data.CalEtiqueta>> DeleteCalEtiqueta(int id)
+        public async Task<ActionResult<Models.CalEtiqueta>> DeleteCalEtiqueta(int id)
         {
-            var universidad = new BS.CalEtiqueta(_context).GetOneById(id);
-            if (universidad == null)
+            var calEtiqueta = new BS.CalEtiqueta(_context).GetOneById(id);
+            var aux = _mapper.Map<data.CalEtiqueta, Models.CalEtiqueta>(calEtiqueta);
+            if (calEtiqueta == null)
             {
                 return NotFound();
             }
 
-            new BS.CalEtiqueta(_context).Delete(universidad);
+            new BS.CalEtiqueta(_context).Delete(calEtiqueta);
 
-            return universidad;
+            return aux;
         }
 
         private bool CalEtiquetaExists(int id)

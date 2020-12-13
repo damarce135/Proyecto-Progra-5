@@ -10,12 +10,18 @@ namespace EP.DAL.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly SolutionDBContext dbContext; 
+        protected readonly SolutionDBContext dbContext;
 
         public Repository(SolutionDBContext context)
         {
-            dbContext = context; 
+            dbContext = context;
         }
+
+        public void AddRange(IEnumerable<T> entities)
+        {
+            dbContext.Set<T>().AddRange(entities);
+        }
+
         public IQueryable<T> AsQueryable()
         {
             return dbContext.Set<T>().AsQueryable();
@@ -24,17 +30,16 @@ namespace EP.DAL.Repository
         public void Commit()
         {
             dbContext.SaveChanges();
-            //dbContext.Database.CloseConnection(); 
         }
 
         public void Delete(T entity)
         {
             try
             {
-                dbContext.Entry<T>(entity).State = EntityState.Deleted;
-            } catch (Exception ee)
+                dbContext.Entry<T>(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            }
+            catch (Exception ee)
             {
-
             }
         }
 
@@ -56,12 +61,18 @@ namespace EP.DAL.Repository
         public void Insert(T entity)
         {
             if (dbContext.Entry<T>(entity).State == EntityState.Detached)
-            { 
+            {
                 dbContext.Entry<T>(entity).State = EntityState.Added;
-            } else
+            }
+            else
             {
                 dbContext.Set<T>().Add(entity);
             }
+        }
+
+        public void RemoveRange(IEnumerable<T> entities)
+        {
+            dbContext.Set<T>().RemoveRange(entities);
         }
 
         public IEnumerable<T> Search(Expression<Func<T, bool>> predicado)
@@ -75,10 +86,8 @@ namespace EP.DAL.Repository
             {
                 dbContext.Set<T>().Attach(entity);
             }
-            else
-            {
-                dbContext.Entry<T>(entity).State = EntityState.Modified;
-            }
+            dbContext.Entry<T>(entity).State = EntityState.Modified;
         }
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EP.DAL.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,51 +15,55 @@ namespace EP.API.Controllers
     public class EtiquetaController : ControllerBase
     {
         private readonly SolutionDBContext _context;
+        private readonly IMapper _mapper;
 
-        public EtiquetaController(SolutionDBContext context)
+        public EtiquetaController(SolutionDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/Etiqueta
+        // GET: api/Etiquetas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<data.Etiqueta>>> GetEtiqueta()
+        public async Task<ActionResult<IEnumerable<Models.Etiqueta>>> GetEtiquetas()
         {
-            return new BS.Etiqueta(_context).GetAll().ToList();
+            var result = new BS.Etiqueta(_context).GetAll().ToList();
+            var aux = _mapper.Map<IEnumerable<data.Etiqueta>, IEnumerable<Models.Etiqueta>>(result);
+            return aux.ToList();
         }
 
-        // GET: api/Etiqueta/5
+        // GET: api/Etiquetas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<data.Etiqueta>> GetEtiqueta(int id)
+        public async Task<ActionResult<Models.Etiqueta>> GetEtiqueta(int id)
         {
-            var universidad = new BS.Etiqueta(_context).GetOneById(id);
+            var etiqueta = new BS.Etiqueta(_context).GetOneById(id);
+            var aux = _mapper.Map<data.Etiqueta, Models.Etiqueta>(etiqueta);
 
-            if (universidad == null)
+            if (aux == null)
             {
                 return NotFound();
             }
 
-            return universidad;
+            return aux;
         }
 
-        // PUT: api/Etiqueta/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // PUT: api/Etiquetas/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEtiqueta(int id, data.Etiqueta universidad)
+        public async Task<IActionResult> PutEtiqueta(int id, Models.Etiqueta etiqueta)
         {
-            if (id != universidad.IdEtiqueta)
+            if (id != etiqueta.IdEtiqueta)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(universidad).State = EntityState.Modified;
-
             try
             {
-                new BS.Etiqueta(_context).Update(universidad);
+                var aux = _mapper.Map<Models.Etiqueta, data.Etiqueta>(etiqueta);
+                new BS.Etiqueta(_context).Update(aux);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
                 if (!EtiquetaExists(id))
                 {
@@ -73,30 +78,32 @@ namespace EP.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Etiqueta
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: api/Etiquetas
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<data.Etiqueta>> PostEtiqueta(data.Etiqueta universidad)
+        public async Task<ActionResult<Models.Etiqueta>> PostEtiqueta(Models.Etiqueta etiqueta)
         {
-            new BS.Etiqueta(_context).Insert(universidad);
+            var aux = _mapper.Map<Models.Etiqueta, data.Etiqueta>(etiqueta);
+            new BS.Etiqueta(_context).Insert(aux);
 
-            return CreatedAtAction("GetEtiqueta", new { id = universidad.IdEtiqueta }, universidad);
+            return CreatedAtAction("GetEtiqueta", new { id = etiqueta.IdEtiqueta }, etiqueta);
         }
 
-        // DELETE: api/Etiqueta/5
+        // DELETE: api/Etiquetas/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<data.Etiqueta>> DeleteEtiqueta(int id)
+        public async Task<ActionResult<Models.Etiqueta>> DeleteEtiqueta(int id)
         {
-            var universidad = new BS.Etiqueta(_context).GetOneById(id);
-            if (universidad == null)
+            var etiqueta = new BS.Etiqueta(_context).GetOneById(id);
+            var aux = _mapper.Map<data.Etiqueta, Models.Etiqueta>(etiqueta);
+            if (etiqueta == null)
             {
                 return NotFound();
             }
 
-            new BS.Etiqueta(_context).Delete(universidad);
+            new BS.Etiqueta(_context).Delete(etiqueta);
 
-            return universidad;
+            return aux;
         }
 
         private bool EtiquetaExists(int id)

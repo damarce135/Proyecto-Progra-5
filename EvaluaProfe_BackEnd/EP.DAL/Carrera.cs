@@ -4,43 +4,53 @@ using EP.DO.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using data = EP.DO.Objects;
 
 namespace EP.DAL
 {
     public class Carrera : ICRUD<data.Carrera>
     {
-        private Repository<data.Carrera> _repository = null;
+        private RepositoryCarrera _repo = null;
         public Carrera(SolutionDBContext solutionDBContext)
         {
-            _repository = new Repository<data.Carrera>(solutionDBContext);
+            _repo = new RepositoryCarrera(solutionDBContext);
         }
         public void Delete(data.Carrera t)
         {
-            _repository.Delete(t);
-            _repository.Commit();
+            _repo.Delete(t);
+            _repo.Commit();
         }
 
         public IEnumerable<data.Carrera> GetAll()
         {
-            return _repository.GetAll();
+            return _repo.GetAll();
         }
 
         public data.Carrera GetOneById(int id)
         {
-            return _repository.GetOneById(id);
+            return _repo.GetOneById(id);
+        }
+        public async Task<IEnumerable<data.Carrera>> GetAllInclude()
+        {
+            return await _repo.GetAllWithCarreraAsync();
+        }
+
+        public async Task<data.Carrera> GetOneByIdInclude(int id)
+        {
+            return await _repo.GetWithCarreraByIdAsync(id);
         }
 
         public void Insert(data.Carrera t)
         {
-            _repository.Insert(t);
-            _repository.Commit();
+            _repo.Insert(t);
+            _repo.Commit();
         }
 
         public void Update(data.Carrera t)
         {
-            _repository.Update(t);
-            _repository.Commit();
+            _repo.Update(t);
+            _repo.Commit();
         }
     }
 }

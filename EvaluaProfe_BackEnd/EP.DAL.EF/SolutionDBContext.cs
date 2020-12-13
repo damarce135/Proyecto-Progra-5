@@ -14,21 +14,21 @@ namespace EP.DAL.EF
 
         }
 
-        public DbSet<Profesor> Profesors { get; set; }
+        public DbSet<Profesor> Profesor { get; set; }
 
-        public DbSet<ProfCurso> ProfCursos { get; set; }
+        public DbSet<ProfCurso> ProfCurso { get; set; }
 
-        public DbSet<Etiqueta> Etiquetas { get; set; }
+        public DbSet<Etiqueta> Etiqueta { get; set; }
 
-        public DbSet<CursoCarrera> CursoCarreras { get; set; }
+        public DbSet<CursoCarrera> CursoCarrera { get; set; }
 
-        public DbSet<Curso> Cursos { get; set; }
+        public DbSet<Curso> Curso { get; set; }
 
-        public DbSet<Carrera> Carreras { get; set; }
+        public DbSet<Carrera> Carrera { get; set; }
 
-        public DbSet<Calificacion> Calificacions { get; set; }
+        public DbSet<Calificacion> Calificacion { get; set; }
 
-        public DbSet<CalEtiqueta> CalEtiquetas { get; set; } 
+        public DbSet<CalEtiqueta> CalEtiqueta { get; set; } 
 
     }
 }

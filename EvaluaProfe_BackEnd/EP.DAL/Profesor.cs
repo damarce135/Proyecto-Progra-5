@@ -4,43 +4,53 @@ using EP.DO.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using data = EP.DO.Objects;
 
 namespace EP.DAL
 {
     public class Profesor : ICRUD<data.Profesor>
     {
-        private Repository<data.Profesor> _repository = null;
+        private RepositoryProfesor _repo = null;
         public Profesor(SolutionDBContext solutionDBContext)
         {
-            _repository = new Repository<data.Profesor>(solutionDBContext);
+            _repo = new RepositoryProfesor(solutionDBContext);
         }
         public void Delete(data.Profesor t)
         {
-            _repository.Delete(t);
-            _repository.Commit();
+            _repo.Delete(t);
+            _repo.Commit();
         }
 
         public IEnumerable<data.Profesor> GetAll()
         {
-            return _repository.GetAll();
+            return _repo.GetAll();
         }
 
         public data.Profesor GetOneById(int id)
         {
-            return _repository.GetOneById(id);
+            return _repo.GetOneById(id);
+        }
+        public async Task<IEnumerable<data.Profesor>> GetAllInclude()
+        {
+            return await _repo.GetAllWithProfesorAsync();
+        }
+
+        public async Task<data.Profesor> GetOneByIdInclude(int id)
+        {
+            return await _repo.GetWithProfesorByIdAsync(id);
         }
 
         public void Insert(data.Profesor t)
         {
-            _repository.Insert(t);
-            _repository.Commit();
+            _repo.Insert(t);
+            _repo.Commit();
         }
 
         public void Update(data.Profesor t)
         {
-            _repository.Update(t);
-            _repository.Commit();
+            _repo.Update(t);
+            _repo.Commit();
         }
     }
 }

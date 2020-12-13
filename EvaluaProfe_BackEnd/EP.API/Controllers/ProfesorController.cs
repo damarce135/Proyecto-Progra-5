@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EP.DAL.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,51 +15,52 @@ namespace EP.API.Controllers
     public class ProfesorController : ControllerBase
     {
         private readonly SolutionDBContext _context;
+        private readonly IMapper _mapper;
 
-        public ProfesorController(SolutionDBContext context)
+        public ProfesorController(SolutionDBContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
-        // GET: api/Profesor
+        // GET: api/Profesors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<data.Profesor>>> GetProfesor()
+        public async Task<ActionResult<IEnumerable<Models.Profesor>>> GetProfesors()
         {
-            return new BS.Profesor(_context).GetAll().ToList();
+            var aux = await new BS.Profesor(_context).GetAllInclude();
+            return _mapper.Map<IEnumerable<data.Profesor>, IEnumerable<Models.Profesor>>(aux).ToList();
         }
 
-        // GET: api/Profesor/5
+        // GET: api/Profesors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<data.Profesor>> GetProfesor(int id)
+        public async Task<ActionResult<Models.Profesor>> GetProfesor(int id)
         {
-            var universidad = new BS.Profesor(_context).GetOneById(id);
-
-            if (universidad == null)
+            var aux = await new BS.Profesor(_context).GetOneByIdInclude(id);
+            var result = _mapper.Map<data.Profesor, Models.Profesor>(aux);
+            if (result == null)
             {
                 return NotFound();
             }
-
-            return universidad;
+            return result;
         }
 
-        // PUT: api/Profesor/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // PUT: api/Profesors/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfesor(int id, data.Profesor universidad)
+        public async Task<IActionResult> PutProfesor(int id, Models.Profesor profesor)
         {
-            if (id != universidad.IdProfesor)
+            if (id != profesor.IdProfesor)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(universidad).State = EntityState.Modified;
-
             try
             {
-                new BS.Profesor(_context).Update(universidad);
+                var result = _mapper.Map<Models.Profesor, data.Profesor>(profesor);
+                new BS.Profesor(_context).Update(result);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
                 if (!ProfesorExists(id))
                 {
@@ -73,30 +75,32 @@ namespace EP.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Profesor
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: api/Profesors
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<data.Profesor>> PostProfesor(data.Profesor universidad)
+        public async Task<ActionResult<Models.Profesor>> PostProfesor(Models.Profesor profesor)
         {
-            new BS.Profesor(_context).Insert(universidad);
+            var result = _mapper.Map<Models.Profesor, data.Profesor>(profesor);
+            new BS.Profesor(_context).Insert(result);
 
-            return CreatedAtAction("GetProfesor", new { id = universidad.IdProfesor }, universidad);
+            return CreatedAtAction("GetProfesor", new { id = profesor.IdProfesor }, profesor);
         }
 
-        // DELETE: api/Profesor/5
+        // DELETE: api/Profesors/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<data.Profesor>> DeleteProfesor(int id)
+        public async Task<ActionResult<Models.Profesor>> DeleteProfesor(int id)
         {
-            var universidad = new BS.Profesor(_context).GetOneById(id);
-            if (universidad == null)
+            var profesor = new BS.Profesor(_context).GetOneById(id);
+            var result = _mapper.Map<data.Profesor, Models.Profesor>(profesor);
+
+            if (profesor == null)
             {
                 return NotFound();
             }
+            new BS.Profesor(_context).Delete(profesor);
 
-            new BS.Profesor(_context).Delete(universidad);
-
-            return universidad;
+            return result;
         }
 
         private bool ProfesorExists(int id)

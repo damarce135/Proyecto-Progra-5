@@ -4,43 +4,53 @@ using EP.DO.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using data = EP.DO.Objects;
 
 namespace EP.DAL
 {
     public class Calificacion : ICRUD<data.Calificacion>
     {
-        private Repository<data.Calificacion> _repository = null;
+        private RepositoryCalificacion _repo = null;
         public Calificacion(SolutionDBContext solutionDBContext)
         {
-            _repository = new Repository<data.Calificacion>(solutionDBContext);
+            _repo = new RepositoryCalificacion(solutionDBContext);
         }
         public void Delete(data.Calificacion t)
         {
-            _repository.Delete(t);
-            _repository.Commit();
+            _repo.Delete(t);
+            _repo.Commit();
         }
 
         public IEnumerable<data.Calificacion> GetAll()
         {
-            return _repository.GetAll();
+            return _repo.GetAll();
         }
 
         public data.Calificacion GetOneById(int id)
         {
-            return _repository.GetOneById(id);
+            return _repo.GetOneById(id);
+        }
+        public async Task<IEnumerable<data.Calificacion>> GetAllInclude()
+        {
+            return await _repo.GetAllWithCalificacionAsync();
+        }
+
+        public async Task<data.Calificacion> GetOneByIdInclude(int id)
+        {
+            return await _repo.GetWithCalificacionByIdAsync(id);
         }
 
         public void Insert(data.Calificacion t)
         {
-            _repository.Insert(t);
-            _repository.Commit();
+            _repo.Insert(t);
+            _repo.Commit();
         }
 
         public void Update(data.Calificacion t)
         {
-            _repository.Update(t);
-            _repository.Commit();
+            _repo.Update(t);
+            _repo.Commit();
         }
     }
 }

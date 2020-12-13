@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EP.DAL.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,51 +15,52 @@ namespace EP.API.Controllers
     public class CalificacionController : ControllerBase
     {
         private readonly SolutionDBContext _context;
+        private readonly IMapper _mapper;
 
-        public CalificacionController(SolutionDBContext context)
+        public CalificacionController(SolutionDBContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: api/Calificacion
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<data.Calificacion>>> GetCalificacion()
+        public async Task<ActionResult<IEnumerable<Models.Calificacion>>> GetCalificacion()
         {
-            return new BS.Calificacion(_context).GetAll().ToList();
+            var aux = await new BS.Calificacion(_context).GetAllInclude();
+            return _mapper.Map<IEnumerable<data.Calificacion>, IEnumerable<Models.Calificacion>>(aux).ToList();
         }
 
         // GET: api/Calificacion/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<data.Calificacion>> GetCalificacion(int id)
+        public async Task<ActionResult<Models.Calificacion>> GetCalificacion(int id)
         {
-            var universidad = new BS.Calificacion(_context).GetOneById(id);
-
-            if (universidad == null)
+            var aux = await new BS.Calificacion(_context).GetOneByIdInclude(id);
+            var result = _mapper.Map<data.Calificacion, Models.Calificacion>(aux);
+            if (result == null)
             {
                 return NotFound();
             }
-
-            return universidad;
+            return result;
         }
 
         // PUT: api/Calificacion/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCalificacion(int id, data.Calificacion universidad)
+        public async Task<IActionResult> PutCalificacion(int id, Models.Calificacion calificacion)
         {
-            if (id != universidad.IdCalificacion)
+            if (id != calificacion.IdCalificacion)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(universidad).State = EntityState.Modified;
-
             try
             {
-                new BS.Calificacion(_context).Update(universidad);
+                var result = _mapper.Map<Models.Calificacion, data.Calificacion>(calificacion);
+                new BS.Calificacion(_context).Update(result);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
                 if (!CalificacionExists(id))
                 {
@@ -74,29 +76,31 @@ namespace EP.API.Controllers
         }
 
         // POST: api/Calificacion
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<data.Calificacion>> PostCalificacion(data.Calificacion universidad)
+        public async Task<ActionResult<Models.Calificacion>> PostCalificacion(Models.Calificacion calificacion)
         {
-            new BS.Calificacion(_context).Insert(universidad);
+            var result = _mapper.Map<Models.Calificacion, data.Calificacion>(calificacion);
+            new BS.Calificacion(_context).Insert(result);
 
-            return CreatedAtAction("GetCalificacion", new { id = universidad.IdCalificacion }, universidad);
+            return CreatedAtAction("GetCalificacion", new { id = calificacion.IdCalificacion }, calificacion);
         }
 
         // DELETE: api/Calificacion/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<data.Calificacion>> DeleteCalificacion(int id)
+        public async Task<ActionResult<Models.Calificacion>> DeleteCalificacion(int id)
         {
-            var universidad = new BS.Calificacion(_context).GetOneById(id);
-            if (universidad == null)
+            var calificacion = new BS.Calificacion(_context).GetOneById(id);
+            var result = _mapper.Map<data.Calificacion, Models.Calificacion>(calificacion);
+
+            if (calificacion == null)
             {
                 return NotFound();
             }
+            new BS.Calificacion(_context).Delete(calificacion);
 
-            new BS.Calificacion(_context).Delete(universidad);
-
-            return universidad;
+            return result;
         }
 
         private bool CalificacionExists(int id)

@@ -7,11 +7,6 @@ namespace EP.DO.Objects
 {
     public class Profesor
     {
-        public Profesor()
-        {
-            Calificacion = new HashSet<Calificacion>();
-            ProfCurso = new HashSet<ProfCurso>();
-        }
 
         [Key]
         public int IdProfesor { get; set; }
@@ -19,7 +14,8 @@ namespace EP.DO.Objects
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
 
-        public virtual ICollection<Calificacion> Calificacion { get; set; }
-        public virtual ICollection<ProfCurso> ProfCurso { get; set; }
+        public virtual ICollection<Calificacion> Calificaciones { get; set; }
+        public virtual ICollection<ProfCurso> ProfCursos { get; set; }
+        public virtual ICollection<Curso> Cursos { get; set; }
     }
 }
