@@ -31,7 +31,7 @@ apellido2 varchar(45)
 --Crear tabla carrera 
 create table carrera ( 
 idCarrera int identity(1,1) primary key, 
-nombreCarrera varchar(200),  
+nombreCarrera varchar(200) 
 ); 
 
 
@@ -39,6 +39,7 @@ nombreCarrera varchar(200),
 create table curso ( 
 idCurso int identity(1,1) primary key, 
 nombreCurso varchar(200), 
+idCarrera int
 ); 
 
 
@@ -47,30 +48,32 @@ create table calificacion (
 idCalificacion int identity(1,1) primary key, 
 idProfesor int, 
 idCurso int, 
+idCarrera int,
 facilidad tinyint, 
 apoyo tinyint, 
 claridad tinyint, 
-estado tinyint, 
+estado bit, 
 comentario varchar(500), 
+idEtiqueta int,
 recomienda bit, 
-calificacion tinyint 
+puntaje tinyint
 ); 
 
 
---Crear tabla cursoCarrera 
-create table cursoCarrera ( 
-idCursoCarrera int identity(1,1) primary key, 
-idCurso int, 
-idCarrera int 
-); 
+----Crear tabla cursoCarrera 
+--create table cursoCarrera ( 
+--idCursoCarrera int identity(1,1) primary key, 
+--idCurso int, 
+--idCarrera int 
+--); 
 
 
---Crear tabla profCurso 
-create table profCurso ( 
-idProfCurso int identity(1,1) primary key, 
-idProfesor int, 
-idCurso int 
-); 
+----Crear tabla profCurso 
+--create table profCurso ( 
+--idProfCurso int identity(1,1) primary key, 
+--idProfesor int, 
+--idCurso int 
+--); 
 
 
 --Crear tabla etiquetas 
@@ -80,12 +83,12 @@ nombreEtiqueta varchar(50)
 ); 
 
 
---Crear tabla calEtiquetas 
-create table calEtiqueta ( 
-idCalEtiqueta int identity(1,1) primary key, 
-idCalificacion int, 
-idEtiqueta int 
-); 
+----Crear tabla calEtiquetas 
+--create table calEtiqueta ( 
+--idCalEtiqueta int identity(1,1) primary key, 
+--idCalificacion int, 
+--idEtiqueta int 
+--); 
 
 
 
@@ -99,26 +102,36 @@ add foreign key (idCurso) references curso(idCurso);
 alter table calificacion  
 add foreign key (idProfesor) references profesor(idProfesor); 
 
+alter table calificacion  
+add foreign key (idCarrera) references carrera(idCarrera);  
 
---Relacion cursos con carreras 
-alter table cursoCarrera 
-add foreign key (idCurso) references curso(idCurso); 
+alter table calificacion  
+add foreign key (idEtiqueta) references etiqueta(idEtiqueta); 
 
-alter table cursoCarrera 
+--Relacion de cursos 
+alter table curso  
 add foreign key (idCarrera) references carrera(idCarrera); 
 
 
---Relacion profesor con cursos 
-alter table profCurso  
-add foreign key (idProfesor) references profesor(idProfesor); 
+----Relacion cursos con carreras 
+--alter table cursoCarrera 
+--add foreign key (idCurso) references curso(idCurso); 
 
-alter table profCurso   
-add foreign key (idCurso) references curso(idCurso); 
+--alter table cursoCarrera 
+--add foreign key (idCarrera) references carrera(idCarrera); 
 
 
---Relacion calificacion con etiquetas 
-alter table calEtiqueta 
-add foreign key (idCalificacion) references calificacion(idCalificacion); 
+----Relacion profesor con cursos 
+--alter table profCurso  
+--add foreign key (idProfesor) references profesor(idProfesor); 
 
-alter table calEtiqueta   
-add foreign key (idEtiqueta) references etiqueta(idEtiqueta); 
+--alter table profCurso   
+--add foreign key (idCurso) references curso(idCurso); 
+
+
+----Relacion calificacion con etiquetas 
+--alter table calEtiqueta 
+--add foreign key (idCalificacion) references calificacion(idCalificacion); 
+
+--alter table calEtiqueta   
+--add foreign key (idEtiqueta) references etiqueta(idEtiqueta); 
