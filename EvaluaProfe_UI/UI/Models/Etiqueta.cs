@@ -8,13 +8,15 @@ namespace UI.Models
     {
         public Etiqueta()
         {
-            CalEtiqueta = new HashSet<CalEtiqueta>();
+            Calificacions = new HashSet<Calificacion>();
         }
 
         [Key]
         public int IdEtiqueta { get; set; }
+
+        [Display(Name = "Tag")]
         public string NombreEtiqueta { get; set; }
 
-        public virtual ICollection<CalEtiqueta> CalEtiqueta { get; set; }
+        public virtual ICollection<Calificacion> Calificacions { get; set; }
     }
 }

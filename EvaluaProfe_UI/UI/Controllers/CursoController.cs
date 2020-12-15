@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using UI.Data;
 using UI.Models;
+using data = UI.Models; 
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class CursoController : Controller
     {
-        string baseURL = "http://localhost:51725/";
+        string baseurl = "http://localhost:59634/";
 
         // GET: Curso
         public async Task<IActionResult> Index()
         {
-            List<Curso> aux = new List<Models.Curso>();
+            List<data.Curso> aux = new List<data.Curso>();
             using (var cl = new HttpClient())
             {
-                cl.BaseAddress = new Uri(baseURL);
+                cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage res = await cl.GetAsync("api/Curso");
+
                 if (res.IsSuccessStatusCode)
                 {
-                    var auxR = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<List<Models.Curso>>(auxR);
+                    var auxres = res.Content.ReadAsStringAsync().Result;
+                    aux = JsonConvert.DeserializeObject<List<data.Curso>>(auxres);
                 }
             }
             return View(aux);
@@ -43,7 +46,7 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            var curso = await GetById(id);
+            var curso = GetById(id);
             if (curso == null)
             {
                 return NotFound();
@@ -55,6 +58,7 @@ namespace UI.Controllers
         // GET: Curso/Create
         public IActionResult Create()
         {
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera");
             return View();
         }
 
@@ -63,25 +67,26 @@ namespace UI.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCurso,NombreCurso")] Curso curso)
+        public async Task<IActionResult> Create([Bind("IdCurso,NombreCurso,IdCarrera")] Curso curso)
         {
             if (ModelState.IsValid)
             {
                 using (var cl = new HttpClient())
                 {
-                    cl.BaseAddress = new Uri(baseURL);
+                    cl.BaseAddress = new Uri(baseurl);
                     var content = JsonConvert.SerializeObject(curso);
                     var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                     var byteContent = new ByteArrayContent(buffer);
                     byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                    HttpResponseMessage res = await cl.PostAsync("api/Curso", byteContent);
-                    if (res.IsSuccessStatusCode)
+                    var postTask = cl.PostAsync("api/Curso", byteContent).Result;
+
+                    if (postTask.IsSuccessStatusCode)
                     {
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction("Index");
                     }
                 }
             }
-            ModelState.AddModelError(string.Empty, "Server Error, Please contact administrator");
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", curso.IdCarrera);
             return View(curso);
         }
 
@@ -93,11 +98,12 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            var curso = await GetById(id);
+            var curso = GetById(id);
             if (curso == null)
             {
                 return NotFound();
             }
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", curso.IdCarrera);
             return View(curso);
         }
 
@@ -106,7 +112,7 @@ namespace UI.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCurso,NombreCurso")] Curso curso)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCurso,NombreCurso,IdCarrera")] Curso curso)
         {
             if (id != curso.IdCurso)
             {
@@ -119,22 +125,23 @@ namespace UI.Controllers
                 {
                     using (var cl = new HttpClient())
                     {
-                        cl.BaseAddress = new Uri(baseURL);
+                        cl.BaseAddress = new Uri(baseurl);
                         var content = JsonConvert.SerializeObject(curso);
                         var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        HttpResponseMessage res = await cl.PutAsync("api/Curso/" + id, byteContent);
-                        if (res.IsSuccessStatusCode)
+                        var postTask = cl.PutAsync("api/Curso/" + id, byteContent).Result;
+
+                        if (postTask.IsSuccessStatusCode)
                         {
-                            return RedirectToAction(nameof(Index));
+                            return RedirectToAction("Index");
                         }
                     }
                 }
-                catch (Exception ee)
+                catch (Exception)
                 {
-                    var temp = await GetById(id);
-                    if (temp == null)
+                    var aux2 = GetById(id);
+                    if (aux2 == null)
                     {
                         return NotFound();
                     }
@@ -145,6 +152,7 @@ namespace UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", curso.IdCarrera);
             return View(curso);
         }
 
@@ -156,7 +164,7 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            var curso = await GetById(id);
+            var curso = GetById(id);
             if (curso == null)
             {
                 return NotFound();
@@ -172,31 +180,53 @@ namespace UI.Controllers
         {
             using (var cl = new HttpClient())
             {
-                cl.BaseAddress = new Uri(baseURL);
+                cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage res = await cl.DeleteAsync("api/Curso/" + id);
+
                 if (res.IsSuccessStatusCode)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index");
                 }
             }
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<Curso> GetById(int? id)
+        private data.Curso GetById(int? id)
         {
-            Curso aux = new Curso();
+            data.Curso aux = new data.Curso();
             using (var cl = new HttpClient())
             {
-                cl.BaseAddress = new Uri(baseURL);
+                cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await cl.GetAsync("api/Curso/" + id);
+                //HttpResponseMessage res = await cl.GetAsync("api/Pais/5?"+id);
+                HttpResponseMessage res = cl.GetAsync("api/Curso/" + id).Result;
+
                 if (res.IsSuccessStatusCode)
                 {
-                    var auxR = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<Models.Curso>(auxR);
+                    var auxres = res.Content.ReadAsStringAsync().Result;
+                    aux = JsonConvert.DeserializeObject<data.Curso>(auxres);
+                }
+            }
+            return aux;
+        }
+
+        private List<data.Carrera> GetAllCarreras()
+        {
+            List<data.Carrera> aux = new List<data.Carrera>();
+            using (var cl = new HttpClient())
+            {
+                cl.BaseAddress = new Uri(baseurl);
+                cl.DefaultRequestHeaders.Clear();
+                cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = cl.GetAsync("api/Carrera").Result;
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var auxres = res.Content.ReadAsStringAsync().Result;
+                    aux = JsonConvert.DeserializeObject<List<data.Carrera>>(auxres);
                 }
             }
             return aux;

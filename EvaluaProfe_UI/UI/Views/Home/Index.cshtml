@@ -1,8 +1,92 @@
-﻿@{
+﻿@model IEnumerable<UI.Models.Calificacion>
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "_LayoutHome";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor.Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facilidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apoyo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Claridad)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Comentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recomienda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Puntaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etiqueta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carrera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Curso)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profesor.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Facilidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apoyo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Claridad)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Comentario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recomienda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Puntaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
+            </td>
+
+            @*<td>
+            <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.IdCalificacion">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.IdCalificacion">Delete</a>
+        </td>*@
+        </tr>
+        }
+    </tbody>
+</table>

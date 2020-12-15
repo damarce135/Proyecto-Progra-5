@@ -8,17 +8,19 @@ namespace UI.Models
     {
         public Curso()
         {
-            Calificacion = new HashSet<Calificacion>();
-            CursoCarrera = new HashSet<CursoCarrera>();
-            ProfCurso = new HashSet<ProfCurso>();
+            Calificacions = new HashSet<Calificacion>();
         }
 
         [Key]
         public int IdCurso { get; set; }
+
+        [Display(Name = "Nombre")]
         public string NombreCurso { get; set; }
 
-        public virtual ICollection<Calificacion> Calificacion { get; set; }
-        public virtual ICollection<CursoCarrera> CursoCarrera { get; set; }
-        public virtual ICollection<ProfCurso> ProfCurso { get; set; }
+        [Display(Name = "Carrera")]
+        public int? IdCarrera { get; set; }
+
+        public virtual Carrera Carrera { get; set; }
+        public virtual ICollection<Calificacion> Calificacions { get; set; }
     }
 }

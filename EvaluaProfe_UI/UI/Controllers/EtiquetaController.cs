@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,10 @@ using UI.Models;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class EtiquetaController : Controller
     {
-        string baseURL = "http://localhost:51725/";
+        string baseURL = "http://localhost:59634/";
 
         // GET: Etiqueta
         public async Task<IActionResult> Index()
@@ -25,7 +27,7 @@ namespace UI.Controllers
                 cl.BaseAddress = new Uri(baseURL);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await cl.GetAsync("api/Etiqueta");
+                HttpResponseMessage res = await cl.GetAsync("api/Etiquetum");
                 if (res.IsSuccessStatusCode)
                 {
                     var auxR = res.Content.ReadAsStringAsync().Result;
@@ -74,7 +76,7 @@ namespace UI.Controllers
                     var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                     var byteContent = new ByteArrayContent(buffer);
                     byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                    HttpResponseMessage res = await cl.PostAsync("api/Etiqueta", byteContent);
+                    HttpResponseMessage res = await cl.PostAsync("api/Etiquetum", byteContent);
                     if (res.IsSuccessStatusCode)
                     {
                         return RedirectToAction(nameof(Index));
@@ -124,7 +126,7 @@ namespace UI.Controllers
                         var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        HttpResponseMessage res = await cl.PutAsync("api/Etiqueta/" + id, byteContent);
+                        HttpResponseMessage res = await cl.PutAsync("api/Etiquetum/" + id, byteContent);
                         if (res.IsSuccessStatusCode)
                         {
                             return RedirectToAction(nameof(Index));
@@ -175,7 +177,7 @@ namespace UI.Controllers
                 cl.BaseAddress = new Uri(baseURL);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await cl.DeleteAsync("api/Etiqueta/" + id);
+                HttpResponseMessage res = await cl.DeleteAsync("api/Etiquetum/" + id);
                 if (res.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index));
@@ -192,7 +194,7 @@ namespace UI.Controllers
                 cl.BaseAddress = new Uri(baseURL);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await cl.GetAsync("api/Etiqueta/" + id);
+                HttpResponseMessage res = await cl.GetAsync("api/Etiquetum/" + id);
                 if (res.IsSuccessStatusCode)
                 {
                     var auxR = res.Content.ReadAsStringAsync().Result;

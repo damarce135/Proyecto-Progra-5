@@ -15,14 +15,10 @@ namespace UI.Models
         {
         }
 
-        //public virtual DbSet<Administrador> Administrador { get; set; }
-        public virtual DbSet<CalEtiqueta> CalEtiqueta { get; set; }
         public virtual DbSet<Calificacion> Calificacion { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
-        public virtual DbSet<CursoCarrera> CursoCarrera { get; set; }
         public virtual DbSet<Etiqueta> Etiqueta { get; set; }
-        public virtual DbSet<ProfCurso> ProfCurso { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,48 +32,16 @@ namespace UI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
-
-            modelBuilder.Entity<CalEtiqueta>(entity =>
-            {
-                entity.HasKey(e => e.IdCalEtiqueta)
-                    .HasName("PK__calEtiqu__0A25B31E47F40C52");
-
-                entity.ToTable("calEtiqueta");
-
-                entity.Property(e => e.IdCalEtiqueta)
-                    .HasColumnName("idCalEtiqueta")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdCalificacion).HasColumnName("idCalificacion");
-
-                entity.Property(e => e.IdEtiqueta).HasColumnName("idEtiqueta");
-
-                entity.HasOne(d => d.IdCalificacionNavigation)
-                    .WithMany(p => p.CalEtiqueta)
-                    .HasForeignKey(d => d.IdCalificacion)
-                    .HasConstraintName("FK__calEtique__idCal__52593CB8");
-
-                entity.HasOne(d => d.IdEtiquetaNavigation)
-                    .WithMany(p => p.CalEtiqueta)
-                    .HasForeignKey(d => d.IdEtiqueta)
-                    .HasConstraintName("FK__calEtique__idEti__534D60F1");
-            });
-
             modelBuilder.Entity<Calificacion>(entity =>
             {
                 entity.HasKey(e => e.IdCalificacion)
-                    .HasName("PK__califica__E056358F6AC31138");
+                    .HasName("PK__califica__E056358F7FF73068");
 
                 entity.ToTable("calificacion");
 
-                entity.Property(e => e.IdCalificacion)
-                    .HasColumnName("idCalificacion")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.IdCalificacion).HasColumnName("idCalificacion");
 
                 entity.Property(e => e.Apoyo).HasColumnName("apoyo");
-
-                entity.Property(e => e.Calificacion1).HasColumnName("calificacion");
 
                 entity.Property(e => e.Claridad).HasColumnName("claridad");
 
@@ -90,94 +54,84 @@ namespace UI.Models
 
                 entity.Property(e => e.Facilidad).HasColumnName("facilidad");
 
+                entity.Property(e => e.IdCarrera).HasColumnName("idCarrera");
+
                 entity.Property(e => e.IdCurso).HasColumnName("idCurso");
+
+                entity.Property(e => e.IdEtiqueta).HasColumnName("idEtiqueta");
 
                 entity.Property(e => e.IdProfesor).HasColumnName("idProfesor");
 
+                entity.Property(e => e.Puntaje).HasColumnName("puntaje");
+
                 entity.Property(e => e.Recomienda).HasColumnName("recomienda");
 
-                entity.HasOne(d => d.IdCursoNavigation)
-                    .WithMany(p => p.Calificacion)
-                    .HasForeignKey(d => d.IdCurso)
-                    .HasConstraintName("FK__calificac__idCur__4AB81AF0");
+                //entity.HasOne(d => d.Carrera)
+                //    .WithMany(p => p.Calificacion)
+                //    .HasForeignKey(d => d.IdCarrera)
+                //    .HasConstraintName("FK__calificac__idCar__403A8C7D");
 
-                entity.HasOne(d => d.IdProfesorNavigation)
-                    .WithMany(p => p.Calificacion)
-                    .HasForeignKey(d => d.IdProfesor)
-                    .HasConstraintName("FK__calificac__idPro__4BAC3F29");
+                //entity.HasOne(d => d.Curso)
+                //    .WithMany(p => p.Calificacion)
+                //    .HasForeignKey(d => d.IdCurso)
+                //    .HasConstraintName("FK__calificac__idCur__3E52440B");
+
+                //entity.HasOne(d => d.Etiqueta)
+                //    .WithMany(p => p.Calificacion)
+                //    .HasForeignKey(d => d.IdEtiqueta)
+                //    .HasConstraintName("FK__calificac__idEti__412EB0B6");
+
+                //entity.HasOne(d => d.Profesor)
+                //    .WithMany(p => p.Calificacion)
+                //    .HasForeignKey(d => d.IdProfesor)
+                //    .HasConstraintName("FK__calificac__idPro__3F466844");
             });
 
             modelBuilder.Entity<Carrera>(entity =>
             {
                 entity.HasKey(e => e.IdCarrera)
-                    .HasName("PK__carrera__7B19E791AA8840C6");
+                    .HasName("PK__carrera__7B19E7917801CE24");
 
                 entity.ToTable("carrera");
 
-                entity.Property(e => e.IdCarrera)
-                    .HasColumnName("idCarrera")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.IdCarrera).HasColumnName("idCarrera");
 
                 entity.Property(e => e.NombreCarrera)
                     .HasColumnName("nombreCarrera")
                     .HasMaxLength(200)
                     .IsUnicode(false);
-
             });
 
             modelBuilder.Entity<Curso>(entity =>
             {
                 entity.HasKey(e => e.IdCurso)
-                    .HasName("PK__curso__8551ED050202B835");
+                    .HasName("PK__curso__8551ED055FF1D06C");
 
                 entity.ToTable("curso");
 
-                entity.Property(e => e.IdCurso)
-                    .HasColumnName("idCurso")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.IdCurso).HasColumnName("idCurso");
+
+                entity.Property(e => e.IdCarrera).HasColumnName("idCarrera");
 
                 entity.Property(e => e.NombreCurso)
                     .HasColumnName("nombreCurso")
                     .HasMaxLength(200)
                     .IsUnicode(false);
-            });
 
-            modelBuilder.Entity<CursoCarrera>(entity =>
-            {
-                entity.HasKey(e => e.IdCursoCarrera)
-                    .HasName("PK__cursoCar__405B0B5404809940");
-
-                entity.ToTable("cursoCarrera");
-
-                entity.Property(e => e.IdCursoCarrera)
-                    .HasColumnName("idCursoCarrera")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdCarrera).HasColumnName("idCarrera");
-
-                entity.Property(e => e.IdCurso).HasColumnName("idCurso");
-
-                entity.HasOne(d => d.IdCarreraNavigation)
-                    .WithMany(p => p.CursoCarrera)
-                    .HasForeignKey(d => d.IdCarrera)
-                    .HasConstraintName("FK__cursoCarr__idCar__4D94879B");
-
-                entity.HasOne(d => d.IdCursoNavigation)
-                    .WithMany(p => p.CursoCarrera)
-                    .HasForeignKey(d => d.IdCurso)
-                    .HasConstraintName("FK__cursoCarr__idCur__4CA06362");
+                //entity.HasOne(d => d.IdCarreraNavigation)
+                //    .WithMany(p => p.Curso)
+                //    .HasForeignKey(d => d.IdCarrera)
+                //    .HasConstraintName("FK__curso__idCarrera__4222D4EF");
             });
 
             modelBuilder.Entity<Etiqueta>(entity =>
             {
                 entity.HasKey(e => e.IdEtiqueta)
-                    .HasName("PK__etiqueta__3C1526A74FEE5A7B");
+                    .HasName("PK__etiqueta__3C1526A76CEE0BAD");
 
                 entity.ToTable("etiqueta");
 
-                entity.Property(e => e.IdEtiqueta)
-                    .HasColumnName("idEtiqueta")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.IdEtiqueta).HasColumnName("idEtiqueta");
 
                 entity.Property(e => e.NombreEtiqueta)
                     .HasColumnName("nombreEtiqueta")
@@ -185,43 +139,14 @@ namespace UI.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ProfCurso>(entity =>
-            {
-                entity.HasKey(e => e.IdProfCurso)
-                    .HasName("PK__profCurs__071E340A2421347E");
-
-                entity.ToTable("profCurso");
-
-                entity.Property(e => e.IdProfCurso)
-                    .HasColumnName("idProfCurso")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdCurso).HasColumnName("idCurso");
-
-                entity.Property(e => e.IdProfesor).HasColumnName("idProfesor");
-
-                entity.HasOne(d => d.IdCursoNavigation)
-                    .WithMany(p => p.ProfCurso)
-                    .HasForeignKey(d => d.IdCurso)
-                    .HasConstraintName("FK__profCurso__idCur__5165187F");
-
-                entity.HasOne(d => d.IdProfesorNavigation)
-                    .WithMany(p => p.ProfCurso)
-                    .HasForeignKey(d => d.IdProfesor)
-                    .HasConstraintName("FK__profCurso__idPro__5070F446");
-            });
-
-
             modelBuilder.Entity<Profesor>(entity =>
             {
                 entity.HasKey(e => e.IdProfesor)
-                    .HasName("PK__profesor__E4BBA604426522EA");
+                    .HasName("PK__profesor__E4BBA60472936245");
 
                 entity.ToTable("profesor");
 
-                entity.Property(e => e.IdProfesor)
-                    .HasColumnName("idProfesor")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.IdProfesor).HasColumnName("idProfesor");
 
                 entity.Property(e => e.Apellido1)
                     .HasColumnName("apellido1")
@@ -239,7 +164,6 @@ namespace UI.Models
                     .IsUnicode(false);
             });
 
-            
             OnModelCreatingPartial(modelBuilder);
         }
 

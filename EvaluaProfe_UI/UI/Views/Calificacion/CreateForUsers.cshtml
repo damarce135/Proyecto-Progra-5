@@ -1,0 +1,74 @@
+﻿@model UI.Models.Calificacion
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_CalPartial";
+} 
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdProfesor" class="control-label"></label>
+                <select asp-for="IdProfesor" class="form-control" asp-items="ViewBag.IdProfesor"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCurso" class="control-label"></label>
+                <select asp-for="IdCurso" class="form-control" asp-items="ViewBag.IdCurso"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCarrera" class="control-label"></label>
+                <select asp-for="IdCarrera" class="form-control" asp-items="ViewBag.IdCarrera"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facilidad" class="control-label"></label>
+                <input asp-for="Facilidad" class="form-control" />
+                <span asp-validation-for="Facilidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apoyo" class="control-label"></label>
+                <input asp-for="Apoyo" class="form-control" />
+                <span asp-validation-for="Apoyo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Claridad" class="control-label"></label>
+                <input asp-for="Claridad" class="form-control" />
+                <span asp-validation-for="Claridad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEtiqueta" class="control-label"></label>
+                <select asp-for="IdEtiqueta" class="form-control" asp-items="ViewBag.IdEtiqueta"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recomienda" class="control-label"></label>
+                <input asp-for="Recomienda" class="form-control" />
+                <span asp-validation-for="Recomienda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Puntaje" class="control-label"></label>
+                <input asp-for="Puntaje" class="form-control" />
+                <span asp-validation-for="Puntaje" class="text-danger"></span>
+            </div>
+            <div class="text-center mt-4">
+                <input type="submit" class="btn btn-xl btn-outline-light" value="CreateForUsersPost">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    Confirmar!
+            </div>
+            @*<div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>*@
+        </form>
+    </div>
+</div>

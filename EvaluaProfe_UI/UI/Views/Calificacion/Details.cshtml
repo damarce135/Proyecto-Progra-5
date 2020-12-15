@@ -11,18 +11,6 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdProfesor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdProfesor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCurso)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCurso)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Facilidad)
         </dt>
         <dd class = "col-sm-10">
@@ -59,10 +47,34 @@
             @Html.DisplayFor(model => model.Recomienda)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Calificacion1)
+            @Html.DisplayNameFor(model => model.Puntaje)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Calificacion1)
+            @Html.DisplayFor(model => model.Puntaje)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Carrera)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Carrera.NombreCarrera)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Curso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Curso.NombreCurso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Etiqueta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Etiqueta.NombreEtiqueta)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Profesor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Profesor.Fullname)
         </dd>
     </dl>
 </div>

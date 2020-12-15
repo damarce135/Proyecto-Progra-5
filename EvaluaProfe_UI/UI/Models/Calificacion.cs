@@ -6,25 +6,37 @@ namespace UI.Models
 {
     public partial class Calificacion
     {
-        public Calificacion()
-        {
-            CalEtiqueta = new HashSet<CalEtiqueta>();
-        }
-
         [Key]
         public int IdCalificacion { get; set; }
-        public int IdProfesor { get; set; }
-        public int IdCurso { get; set; }
-        public byte Facilidad { get; set; }
-        public byte Apoyo { get; set; }
-        public byte Claridad { get; set; }
-        public byte Estado { get; set; }
-        public string Comentario { get; set; }
-        public bool Recomienda { get; set; }
-        public byte Calificacion1 { get; set; }
 
-        public virtual Curso IdCursoNavigation { get; set; }
-        public virtual Profesor IdProfesorNavigation { get; set; }
-        public virtual ICollection<CalEtiqueta> CalEtiqueta { get; set; }
+        [Display(Name = "Profesor")]
+        public int? IdProfesor { get; set; }
+
+        [Display(Name = "Curso")]
+        public int? IdCurso { get; set; }
+
+        [Display(Name = "Carrera")]
+        public int? IdCarrera { get; set; }
+
+        [Display(Name = "Facilidad")]
+        public byte? Facilidad { get; set; }
+        public byte? Apoyo { get; set; }
+        public byte? Claridad { get; set; }
+        public bool Estado { get; set; }
+        public string Comentario { get; set; }
+
+        [Display(Name = "Tag")]
+        public int? IdEtiqueta { get; set; }
+
+        [Display(Name = "Recomendado")]
+        public bool Recomienda { get; set; }
+        public byte? Puntaje { get; set; }
+
+        public virtual Carrera Carrera { get; set; }
+        public virtual Curso Curso { get; set; }
+
+        [Display(Name = "Tag")]
+        public virtual Etiqueta Etiqueta { get; set; }
+        public virtual Profesor Profesor { get; set; }
     }
 }

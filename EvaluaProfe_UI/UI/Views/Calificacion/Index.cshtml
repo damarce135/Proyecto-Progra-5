@@ -13,12 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdProfesor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCurso)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Facilidad)
             </th>
             <th>
@@ -37,7 +31,19 @@
                 @Html.DisplayNameFor(model => model.Recomienda)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Calificacion1)
+                @Html.DisplayNameFor(model => model.Puntaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carrera.NombreCarrera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Curso.NombreCurso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etiqueta.NombreEtiqueta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor.Fullname)
             </th>
             <th></th>
         </tr>
@@ -45,12 +51,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdProfesor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCurso)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Facilidad)
             </td>
@@ -70,7 +70,19 @@
                 @Html.DisplayFor(modelItem => item.Recomienda)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Calificacion1)
+                @Html.DisplayFor(modelItem => item.Puntaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profesor.Fullname)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Edit</a> |

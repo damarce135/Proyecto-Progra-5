@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,10 @@ using UI.Models;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class ProfesorController : Controller
     {
-        string baseURL = "http://localhost:51725/";
+        string baseURL = "http://localhost:59634/";
 
         // GET: Profesor
         public async Task<IActionResult> Index()

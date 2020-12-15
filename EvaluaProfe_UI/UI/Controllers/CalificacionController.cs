@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UI.Models;
-using System.Net.Http;
 using Newtonsoft.Json;
-using data = UI.Models;
+using UI.Models;
+using data = UI.Models; 
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class CalificacionController : Controller
     {
-        string baseurl = "http://localhost:61794/";
+        string baseurl = "http://localhost:59634/";
 
         // GET: Calificacion
         public async Task<IActionResult> Index()
         {
-
             List<data.Calificacion> aux = new List<data.Calificacion>();
             using (var cl = new HttpClient())
             {
@@ -54,20 +55,24 @@ namespace UI.Controllers
             return View(calificacion);
         }
 
+        [AllowAnonymous]
         // GET: Calificacion/Create
         public IActionResult Create()
         {
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesor(), "IdProfesor", "Nombre");
-            ViewData["IdCurso"] = new SelectList(GetAllCurso(), "IdCurso", "NombreCurso");
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso");
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta");
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor");
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera");
             return View();
         }
 
+        [AllowAnonymous]
         // POST: Calificacion/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCalificacion,IdProfesor,IdCurso,Facilidad,Apoyo,Claridad,Estado,Comentario,Recomienda,Calificacion1")] data.Calificacion calificacion)
+        public async Task<IActionResult> Create([Bind("IdCalificacion,IdProfesor,IdCarrera,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
         {
             if (ModelState.IsValid)
             {
@@ -86,8 +91,10 @@ namespace UI.Controllers
                     }
                 }
             }
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesor(), "IdProfesor", "Nombre");
-            ViewData["IdCurso"] = new SelectList(GetAllCurso(), "IdCurso", "NombreCurso");
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", calificacion.IdCarrera);
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso", calificacion.IdCurso);
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta", calificacion.IdEtiqueta);
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor", calificacion.IdProfesor);
             return View(calificacion);
         }
 
@@ -104,19 +111,21 @@ namespace UI.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesor(), "IdProfesor", "Nombre");
-            ViewData["IdCurso"] = new SelectList(GetAllCurso(), "IdCurso", "NombreCurso");
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", calificacion.IdCarrera);
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso", calificacion.IdCurso);
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta", calificacion.IdEtiqueta);
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor", calificacion.IdProfesor);
             return View(calificacion);
         }
 
         // POST: Calificacion/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCalificacion,IdProfesor,IdCurso,Facilidad,Apoyo,Claridad,Estado,Comentario,Recomienda,Calificacion1")] data.Calificacion calificacion)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCalificacion,IdProfesor,IdCarrera,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
         {
-            if (id != calificacion.IdCalificacion)
+            if (id != calificacion.IdCurso)
             {
                 return NotFound();
             }
@@ -154,8 +163,10 @@ namespace UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesor(), "IdProfesor", "Nombre");
-            ViewData["IdCurso"] = new SelectList(GetAllCurso(), "IdCurso", "NombreCurso");
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", calificacion.IdCarrera);
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso", calificacion.IdCurso);
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta", calificacion.IdEtiqueta);
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor", calificacion.IdProfesor);
             return View(calificacion);
         }
 
@@ -204,7 +215,7 @@ namespace UI.Controllers
                 cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                //HttpResponseMessage res = await cl.GetAsync("api/Pais/5?"+id);
+               
                 HttpResponseMessage res = cl.GetAsync("api/Calificacion/" + id).Result;
 
                 if (res.IsSuccessStatusCode)
@@ -216,28 +227,28 @@ namespace UI.Controllers
             return aux;
         }
 
-        private List<data.Profesor> GetAllProfesor()
+        private List<data.Carrera> GetAllCarreras()
         {
-            List<data.Profesor> aux = new List<data.Profesor>();
+            List<data.Carrera> aux = new List<data.Carrera>();
             using (var cl = new HttpClient())
             {
                 cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = cl.GetAsync("api/Profesor").Result;
+                HttpResponseMessage res = cl.GetAsync("api/Carrera").Result;
 
                 if (res.IsSuccessStatusCode)
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<List<data.Profesor>>(auxres);
+                    aux = JsonConvert.DeserializeObject<List<data.Carrera>>(auxres);
                 }
             }
             return aux;
         }
 
-        private List<data.Curso> GetAllCurso()
+        private List<data.Curso> GetAllCursos()
         {
-            List<data.Curso> aux = new List<data.Curso>();
+            List<data.Curso> aux1 = new List<data.Curso>();
             using (var cl = new HttpClient())
             {
                 cl.BaseAddress = new Uri(baseurl);
@@ -248,10 +259,49 @@ namespace UI.Controllers
                 if (res.IsSuccessStatusCode)
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<List<data.Curso>>(auxres);
+                    aux1 = JsonConvert.DeserializeObject<List<data.Curso>>(auxres);
                 }
             }
-            return aux;
+            return aux1;
         }
+
+        private List<data.Profesor> GetAllProfesors()
+        {
+            List<data.Profesor> aux1 = new List<data.Profesor>();
+            using (var cl = new HttpClient())
+            {
+                cl.BaseAddress = new Uri(baseurl);
+                cl.DefaultRequestHeaders.Clear();
+                cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = cl.GetAsync("api/Profesor").Result;
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var auxres = res.Content.ReadAsStringAsync().Result;
+                    aux1 = JsonConvert.DeserializeObject<List<data.Profesor>>(auxres);
+                }
+            }
+            return aux1;
+        }
+
+        private List<data.Etiqueta> GetAllEtiquetas()
+        {
+            List<data.Etiqueta> aux1 = new List<data.Etiqueta>();
+            using (var cl = new HttpClient())
+            {
+                cl.BaseAddress = new Uri(baseurl);
+                cl.DefaultRequestHeaders.Clear();
+                cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = cl.GetAsync("api/Etiquetum").Result;
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var auxres = res.Content.ReadAsStringAsync().Result;
+                    aux1 = JsonConvert.DeserializeObject<List<data.Etiqueta>>(auxres);
+                }
+            }
+            return aux1;
+        }
+
     }
 }
