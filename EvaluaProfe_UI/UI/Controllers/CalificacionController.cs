@@ -78,6 +78,7 @@ namespace UI.Controllers
             {
                 using (var cl = new HttpClient())
                 {
+                    //calificacion.Facilidad = (byte)(calificacion.Facilidad);
                     calificacion.Estado = false;
                     calificacion.Puntaje = (byte?)((calificacion.Apoyo + calificacion.Claridad + calificacion.Facilidad) / 3);
                     cl.BaseAddress = new Uri(baseurl);
@@ -127,7 +128,7 @@ namespace UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdCalificacion,IdProfesor,IdCurso,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
         {
-            if (id != calificacion.IdCurso)
+            if (id != calificacion.IdCalificacion)
             {
                 return NotFound();
             }
