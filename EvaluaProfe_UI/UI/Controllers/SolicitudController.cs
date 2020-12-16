@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using UI.Models;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class SolicitudController : Controller
     {
         string baseURL = "http://localhost:59634/";
@@ -51,12 +53,14 @@ namespace UI.Controllers
             return View(solicitud);
         }
 
+        [AllowAnonymous]
         // GET: Solicitud/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        [AllowAnonymous]
         // POST: Solicitud/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -76,7 +80,7 @@ namespace UI.Controllers
                     HttpResponseMessage res = await cl.PostAsync("api/Solicitud", byteContent);
                     if (res.IsSuccessStatusCode)
                     {
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction("Privacy","Home");
                     }
                 }
             }

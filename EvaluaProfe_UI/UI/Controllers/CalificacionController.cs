@@ -22,6 +22,7 @@ namespace UI.Controllers
         public async Task<IActionResult> Index()
         {
             List<data.Calificacion> aux = new List<data.Calificacion>();
+            List<data.Calificacion> auxFilter = new List<data.Calificacion>();
             using (var cl = new HttpClient())
             {
                 cl.BaseAddress = new Uri(baseurl);
@@ -33,9 +34,10 @@ namespace UI.Controllers
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
                     aux = JsonConvert.DeserializeObject<List<data.Calificacion>>(auxres);
+                    auxFilter = aux.FindAll(a => a.Estado.Equals(false));
                 }
             }
-            return View(aux);
+            return View(auxFilter);
         }
 
         // GET: Calificacion/Details/5
