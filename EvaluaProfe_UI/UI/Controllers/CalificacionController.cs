@@ -78,6 +78,7 @@ namespace UI.Controllers
             {
                 using (var cl = new HttpClient())
                 {
+                    calificacion.Estado = false;
                     cl.BaseAddress = new Uri(baseurl);
                     var content = JsonConvert.SerializeObject(calificacion);
                     var buffer = System.Text.Encoding.UTF8.GetBytes(content);
