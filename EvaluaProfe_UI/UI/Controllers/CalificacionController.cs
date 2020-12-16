@@ -59,9 +59,9 @@ namespace UI.Controllers
         // GET: Calificacion/Create
         public IActionResult Create()
         {
-            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso");
-            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta");
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor");
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "NombreCurso");
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "NombreEtiqueta");
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "Fullname");
             ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera");
             return View();
         }
@@ -72,13 +72,14 @@ namespace UI.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCalificacion,IdProfesor,IdCarrera,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
+        public async Task<IActionResult> Create([Bind("IdCalificacion,IdProfesor,IdCurso,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
         {
             if (ModelState.IsValid)
             {
                 using (var cl = new HttpClient())
                 {
                     calificacion.Estado = false;
+                    calificacion.Puntaje = (byte?)((calificacion.Apoyo + calificacion.Claridad + calificacion.Facilidad) / 3);
                     cl.BaseAddress = new Uri(baseurl);
                     var content = JsonConvert.SerializeObject(calificacion);
                     var buffer = System.Text.Encoding.UTF8.GetBytes(content);
@@ -88,14 +89,14 @@ namespace UI.Controllers
 
                     if (postTask.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Home");
                     }
                 }
             }
-            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", calificacion.IdCarrera);
-            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso", calificacion.IdCurso);
-            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta", calificacion.IdEtiqueta);
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor", calificacion.IdProfesor);
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera", calificacion.IdCarrera);
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "NombreCurso", calificacion.IdCurso);
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "NombreEtiqueta", calificacion.IdEtiqueta);
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "Fullname", calificacion.IdProfesor);
             return View(calificacion);
         }
 
@@ -112,10 +113,10 @@ namespace UI.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", calificacion.IdCarrera);
-            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso", calificacion.IdCurso);
-            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta", calificacion.IdEtiqueta);
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor", calificacion.IdProfesor);
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera", calificacion.IdCarrera);
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "NombreCurso", calificacion.IdCurso);
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "NombreEtiqueta", calificacion.IdEtiqueta);
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "Fullname", calificacion.IdProfesor);
             return View(calificacion);
         }
 
@@ -124,7 +125,7 @@ namespace UI.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCalificacion,IdProfesor,IdCarrera,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCalificacion,IdProfesor,IdCurso,IdCarrera,Facilidad,Apoyo,Claridad,Estado,Comentario,IdEtiqueta,Recomienda,Puntaje")] Calificacion calificacion)
         {
             if (id != calificacion.IdCurso)
             {
@@ -164,10 +165,10 @@ namespace UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", calificacion.IdCarrera);
-            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "IdCurso", calificacion.IdCurso);
-            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "IdEtiqueta", calificacion.IdEtiqueta);
-            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "IdProfesor", calificacion.IdProfesor);
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera", calificacion.IdCarrera);
+            ViewData["IdCurso"] = new SelectList(GetAllCursos(), "IdCurso", "NombreCurso", calificacion.IdCurso);
+            ViewData["IdEtiqueta"] = new SelectList(GetAllEtiquetas(), "IdEtiqueta", "NombreEtiqueta", calificacion.IdEtiqueta);
+            ViewData["IdProfesor"] = new SelectList(GetAllProfesors(), "IdProfesor", "Fullname", calificacion.IdProfesor);
             return View(calificacion);
         }
 
