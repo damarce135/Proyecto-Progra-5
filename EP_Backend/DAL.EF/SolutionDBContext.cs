@@ -22,6 +22,7 @@ namespace DAL.EF
         public virtual DbSet<Curso> Cursos { get; set; }
         public virtual DbSet<Etiquetum> Etiqueta { get; set; }
         public virtual DbSet<Profesor> Profesors { get; set; }
+        public virtual DbSet<Solicitud> Solicituds { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -102,6 +103,26 @@ namespace DAL.EF
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("nombreCarrera");
+            });
+
+            modelBuilder.Entity<Solicitud>(entity =>
+            {
+                entity.HasKey(e => e.IdSolicitud)
+                    .HasName("PK__solicitu__D801DDB822703EB3");
+
+                entity.ToTable("solicitud");
+
+                entity.Property(e => e.IdSolicitud).HasColumnName("idSolicitud");
+
+                entity.Property(e => e.Asunto)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("asunto"); 
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
             });
 
             modelBuilder.Entity<Curso>(entity =>

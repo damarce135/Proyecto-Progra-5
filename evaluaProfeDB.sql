@@ -83,6 +83,14 @@ nombreEtiqueta varchar(50)
 ); 
 
 
+--Crear tabla solicitud 
+create table solicitud ( 
+idSolicitud int identity(1,1) primary key, 
+asunto varchar(100), 
+descripcion varchar(300)
+); 
+
+
 ----Crear tabla calEtiquetas 
 --create table calEtiqueta ( 
 --idCalEtiqueta int identity(1,1) primary key, 

@@ -83,7 +83,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="~/Profesor">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Profesor</span>
+                    <span>Profesores</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="~/Solicitud">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Solicitudes</span>
                 </a>
             </li>
 
@@ -137,9 +144,9 @@
                                     <button type="submit" class="nav-link btn btn-link text-dark">Cerrar sesión</button>
                                 </form>
                                 @*<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" href="@Url.Action("Index", "Home", new { area = "" })">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cerrar sesión
-                                </a>*@
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cerrar sesión
+                                    </a>*@
                             </div>
                         </li>
 
@@ -184,6 +191,13 @@
     <!-- Page level custom scripts -->
     <script src="~/theme/js/demo/chart-area-demo.js"></script>
     <script src="~/theme/js/demo/chart-pie-demo.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/theme/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/theme/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/theme/js/demo/datatables-demo.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

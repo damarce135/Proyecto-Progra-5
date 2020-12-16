@@ -7,15 +7,32 @@
     ViewData["Title"] = "Home Page";
     Layout = "_LayoutHome";
 }
+<style>
+    .hide {
+        display: none;
+    }
+
+    .myDIV:hover + .hide {
+        display: block;
+        color: black;
+    }
+</style>
 
 <input class="form-control" id="miBusqueda" type="text" placeholder="Buscar profesor...">
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Profesor)
+                Profesor  @*@Html.DisplayNameFor(model => model.Profesor.Fullname)*@
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Curso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carrera)
+            </th>
+
+            @*<th>
                 @Html.DisplayNameFor(model => model.Facilidad)
             </th>
             <th>
@@ -23,7 +40,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Claridad)
-            </th>
+            </th>*@
             @*<th>
             @Html.DisplayNameFor(model => model.Estado)
         </th>*@
@@ -33,18 +50,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.Recomienda)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Puntaje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Carrera)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Curso)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Etiqueta)
             </th>
+            <th >
+                @Html.DisplayNameFor(model => model.Puntaje)
+            </th>
+            
+            
+
             <th></th>
         </tr>
     </thead>
@@ -56,6 +71,13 @@
                 @Html.DisplayFor(modelItem => item.Profesor.Fullname)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
+            </td>
+
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Facilidad)
             </td>
             <td>
@@ -63,7 +85,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Claridad)
-            </td>
+            </td>*@
             @*<td>
             @Html.DisplayFor(modelItem => item.Estado)
         </td>*@
@@ -73,18 +95,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Recomienda)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Puntaje)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
             </td>
+            <td class="myDIV">
+                @Html.DisplayFor(modelItem => item.Puntaje)
+            </td>
+            <td class="hide">
+                @Html.DisplayNameFor(model => model.Facilidad):@Html.DisplayFor(modelItem => item.Facilidad) <br>
+
+                @Html.DisplayNameFor(model => model.Apoyo): @Html.DisplayFor(modelItem => item.Apoyo) <br>
+                @Html.DisplayNameFor(model => model.Claridad):@Html.DisplayFor(modelItem => item.Claridad)
+
+            </td>
+
 
             @*<td>
             <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Edit</a> |
@@ -105,6 +130,5 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-
     });
 </script>

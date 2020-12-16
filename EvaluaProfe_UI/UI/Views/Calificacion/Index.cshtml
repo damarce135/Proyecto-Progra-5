@@ -4,54 +4,61 @@
     ViewData["Title"] = "Index";
 }
 
+<head>
+    <!-- Custom styles for this page -->
+    <link href="~/theme/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
 <h1>Lista de Calificaciones</h1>
 
 @*<p>
-    <a asp-action="Create">Crear Calificación</a>
-</p>*@
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Profesor @*@Html.DisplayNameFor(model => model.Profesor.Fullname)*@
-            </th>
-            <th>
-                Curso  @*@Html.DisplayNameFor(model => model.Curso.NombreCurso)*@
-            </th>
-            <th>
-                Carrera @*@Html.DisplayNameFor(model => model.Carrera.NombreCarrera)*@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Puntaje)
-            </th>
-            <th>
-                Etiqueta  @* @Html.DisplayNameFor(model => model.Etiqueta.NombreEtiqueta)*@
-            </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Facilidad)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Apoyo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Claridad)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Estado)
-                    </th>
+        <a asp-action="Create">Crear Calificación</a>
+    </p>*@
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    Profesor @*@Html.DisplayNameFor(model => model.Profesor.Fullname)*@
+                </th>
+                <th>
+                    Curso  @*@Html.DisplayNameFor(model => model.Curso.NombreCurso)*@
+                </th>
+                <th>
+                    Carrera @*@Html.DisplayNameFor(model => model.Carrera.NombreCarrera)*@
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Puntaje)
+                </th>
+                <th>
+                    Etiqueta  @* @Html.DisplayNameFor(model => model.Etiqueta.NombreEtiqueta)*@
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Facilidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apoyo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Claridad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Recomienda)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Comentario)
-                    </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Recomienda)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comentario)
+                </th>
 
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-        @foreach (var item in Model) {
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Profesor.Fullname)
@@ -94,6 +101,14 @@
                         <a asp-action="Delete" asp-route-id="@item.IdCalificacion">Eliminar</a>
                     </td>
                 </tr>
-        }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Page level plugins -->
+<!--<script src="~/theme/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="~/theme/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
+
+<!-- Page level custom scripts -->
+<!--<script src="~/theme/js/demo/datatables-demo.js"></script>-->

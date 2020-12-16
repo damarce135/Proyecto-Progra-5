@@ -15,6 +15,7 @@ namespace API.Mappings
             CreateMap<DO.Objects.Curso, Models.Curso>().ReverseMap();
             CreateMap<DO.Objects.Etiquetum, Models.Etiquetum>().ReverseMap();
             CreateMap<DO.Objects.Profesor, Models.Profesor>().ReverseMap();
+            CreateMap<DO.Objects.Solicitud, Models.Solicitud>().ReverseMap();
         }
     }
 }

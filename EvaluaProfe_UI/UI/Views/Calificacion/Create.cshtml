@@ -5,9 +5,9 @@
     Layout = "_LayoutUser";
 }
 
-<h1>Crear</h1>
 
-<h4>Calificación</h4>
+
+<h4>Ingrese su calificación</h4>
 <hr />
 <div>
     <form asp-action="Create">
@@ -47,10 +47,43 @@
                 </div>*@
             </div>
             <div class="col-md-4">
-                <label asp-for="Facilidad" class="control-label"></label>
-                <div class="form-check form-check-inline">
-                    <input asp-for="Facilidad" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
-                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">1</label>
+                @*<div id="form-wrapper">
+                    <label asp-for="Facilidad" class="control-label"></label><br />
+                    <div id="debt-amount-slider">
+                        <input type="radio" name="Facilidad" id="1" value="1" required>
+                        <label for="1" data-debt-amount="< $10k"></label>
+                        <input type="radio" name="Facilidad" id="2" value="2" required>
+                        <label for="2" data-debt-amount="$10k-25k"></label>
+                        <input type="radio" name="Facilidad" id="3" value="3" required>
+                        <label for="3" data-debt-amount="$25k-50k"></label>
+                        <input type="radio" name="Facilidad" id="4" value="4" required>
+                        <label for="4" data-debt-amount="$50k-100k"></label>
+                        <input type="radio" name="Facilidad" id="5" value="5" required>
+                        <label for="5" data-debt-amount="$100k+"></label>
+                        <div id="debt-amount-pos"></div>
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    <label asp-for="Facilidad" class="control-label"></label><br />
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="1" checked />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">1</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="2" />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">2</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="3" />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">3</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="4" checked />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">4</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="5" />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">5</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="6" />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">6</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="7" checked />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">7</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="8" />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">8</label>&nbsp;&nbsp;
+                    <input asp-for="Facilidad" type="radio" name="Facilidad" value="9" />
+                    <label asp-for="Facilidad" class="form-check-label" for="inlineRadio1">9</label>&nbsp;&nbsp;
+                    <span asp-validation-for="Facilidad" class="text-danger"></span>
                 </div>
                 @*<div class="form-group">
             <label asp-for="Facilidad" class="control-label"></label>
@@ -58,13 +91,49 @@
             <span asp-validation-for="Facilidad" class="text-danger"></span>
         </div>*@
                 <div class="form-group">
-                    <label asp-for="Apoyo" class="control-label"></label>
-                    <input asp-for="Apoyo" class="form-control" />
+                    <label asp-for="Apoyo" class="control-label"></label><br />
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="1" checked />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">1</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="2" />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">2</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="3" />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">3</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="4" checked />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">4</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="5" />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">5</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="6" />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">6</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="7" checked />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">7</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="8" />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">8</label>&nbsp;&nbsp;
+                    <input asp-for="Apoyo" type="radio" name="Apoyo" value="9" />
+                    <label asp-for="Apoyo" class="form-check-label" for="inlineRadio1">9</label>&nbsp;&nbsp;
+                    @*<input asp-for="Apoyo" class="form-control" />*@
                     <span asp-validation-for="Apoyo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Claridad" class="control-label"></label>
-                    <input asp-for="Claridad" class="form-control" />
+                    <label asp-for="Claridad" class="control-label"></label><br />
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="1" checked />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">1</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="2" />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">2</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="3" />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">3</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="4" checked />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">4</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="5" />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">5</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="6" />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">6</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="7" checked />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">7</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="8" />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">8</label>&nbsp;&nbsp;
+                    <input asp-for="Claridad" type="radio" name="Claridad" value="9" />
+                    <label asp-for="Claridad" class="form-check-label" for="inlineRadio1">9</label>&nbsp;&nbsp;
+                    @*<input asp-for="Claridad" class="form-control" />*@
                     <span asp-validation-for="Claridad" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -82,7 +151,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Home">Back to List</a>
 </div>
 
 @section Scripts {

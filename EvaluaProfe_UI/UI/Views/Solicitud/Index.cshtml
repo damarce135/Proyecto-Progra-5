@@ -1,0 +1,42 @@
+﻿@model IEnumerable<UI.Models.Solicitud>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Solicitudes</h1>
+
+@*<p>
+    <a asp-action="Create">Create</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Asunto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asunto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.IdSolicitud">Edit</a> |*@
+                <a asp-action="Details" asp-route-id="@item.IdSolicitud">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdSolicitud">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

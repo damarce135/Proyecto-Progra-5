@@ -20,6 +20,7 @@ namespace UI.Data
         public virtual DbSet<Etiqueta> Etiqueta { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<AspNetUser> AspNetUser { get; set; }
     }
 }

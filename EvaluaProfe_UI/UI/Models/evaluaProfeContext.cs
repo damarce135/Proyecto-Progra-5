@@ -20,6 +20,7 @@ namespace UI.Models
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Etiqueta> Etiqueta { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Solicitud> Solicituds { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -100,6 +101,26 @@ namespace UI.Models
                     .HasColumnName("nombreCarrera")
                     .HasMaxLength(200)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Solicitud>(entity =>
+            {
+                entity.HasKey(e => e.IdSolicitud)
+                    .HasName("PK__solicitu__D801DDB822703EB3");
+
+                entity.ToTable("solicitud");
+
+                entity.Property(e => e.IdSolicitud).HasColumnName("idSolicitud");
+
+                entity.Property(e => e.Asunto)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("asunto");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
             });
 
             modelBuilder.Entity<Curso>(entity =>
