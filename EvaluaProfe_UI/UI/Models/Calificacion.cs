@@ -19,9 +19,9 @@ namespace UI.Models
         public int? IdCarrera { get; set; }
 
         [Display(Name = "Facilidad")]
-        public byte? Facilidad { get; set; }
-        public byte? Apoyo { get; set; }
-        public byte? Claridad { get; set; }
+        public byte Facilidad { get; set; }
+        public byte Apoyo { get; set; }
+        public byte Claridad { get; set; }
         public bool Estado { get; set; }
         public string Comentario { get; set; }
 
