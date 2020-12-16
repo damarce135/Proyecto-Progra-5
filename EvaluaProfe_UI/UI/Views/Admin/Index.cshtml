@@ -3,6 +3,11 @@
     ViewData["Title"] = "Bienvenido(a)!";
 }
 
+<head>
+    <!-- Custom styles for this page -->
+    <link href="~/theme/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
 <h1>Bienvenido(a)!</h1>
 <hr />
 <h2> Lista de Usuarios </h2>
@@ -10,7 +15,8 @@
     <a asp-action="Create">Crear Usuario</a>
 </p>
     
-    <table class="table">
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <tr><th>Correo</th></tr>
         @foreach (Microsoft.AspNetCore.Identity.IdentityUser user in Model)
         {
@@ -18,15 +24,16 @@
                 @*<td>@user.Id</td>*@
                 <td>@user.Email</td>
                 <td>
-                    <a  asp-action="Update" asp-route-id="@user.Id">
+                    <a asp-action="Update" asp-route-id="@user.Id">
                         Editar
                     </a> |
                     <a asp-action="Delete" asp-route-id="@user.Id" method="post">
-                        
-                            Eliminar
-                        
+
+                        Eliminar
+
                     </a>
                 </td>
             </tr>
         }
     </table>
+</div>

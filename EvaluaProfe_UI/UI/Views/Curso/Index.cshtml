@@ -3,39 +3,47 @@
 @{
     ViewData["Title"] = "Index";
 }
+<head>
+    <!-- Custom styles for this page -->
+    <link href="~/theme/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
 
 <h1>Lista de Cursos</h1>
 
 <p>
     <a asp-action="Create">Crear Curso</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreCurso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Carrera.NombreCarrera)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreCurso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCurso">Editar</a> |
-                @*<a asp-action="Details" asp-route-id="@item.IdCurso">Details</a> |*@
-                @*<a asp-action="Delete" asp-route-id="@item.IdCurso">Eliminar</a>*@
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        @*<table class="table">*@
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NombreCurso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Carrera.NombreCarrera)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreCurso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdCurso">Editar</a> |
+                        @*<a asp-action="Details" asp-route-id="@item.IdCurso">Details</a> |*@
+                        @*<a asp-action="Delete" asp-route-id="@item.IdCurso">Eliminar</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

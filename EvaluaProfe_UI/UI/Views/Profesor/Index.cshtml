@@ -4,44 +4,52 @@
     ViewData["Title"] = "Index";
 }
 
+<head>
+    <!-- Custom styles for this page -->
+    <link href="~/theme/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
 <h1>Lista de Profesores</h1>
 
 <p>
     <a asp-action="Create">Crear Profesor</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido2)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido2)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdProfesor">Editar</a> |
-                @*<a asp-action="Details" asp-route-id="@item.IdProfesor">Details</a> |*@
-                @*<a asp-action="Delete" asp-route-id="@item.IdProfesor">Eliminar</a>*@
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apellido1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apellido2)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido2)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdProfesor">Editar</a> |
+                        @*<a asp-action="Details" asp-route-id="@item.IdProfesor">Details</a> |*@
+                        @*<a asp-action="Delete" asp-route-id="@item.IdProfesor">Eliminar</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
