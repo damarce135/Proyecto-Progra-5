@@ -5,7 +5,8 @@
 @{
 }
 
-<h1 class="bg-info text-white">Update User</h1>
+<h1 >Editar</h1>
+<h4>Usuario</h4>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -22,5 +23,6 @@
         <label for="password">Password</label>
         <input name="password" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary">Regresar</a>
 </form>

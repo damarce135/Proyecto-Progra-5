@@ -4,92 +4,96 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista de Calificaciones</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@*<p>
+    <a asp-action="Create">Crear Calificación</a>
+</p>*@
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Facilidad)
+                Profesor @*@Html.DisplayNameFor(model => model.Profesor.Fullname)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Apoyo)
+                Curso  @*@Html.DisplayNameFor(model => model.Curso.NombreCurso)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Claridad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Recomienda)
+                Carrera @*@Html.DisplayNameFor(model => model.Carrera.NombreCarrera)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Puntaje)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Carrera.NombreCarrera)
+                Etiqueta  @* @Html.DisplayNameFor(model => model.Etiqueta.NombreEtiqueta)*@
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Curso.NombreCurso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Etiqueta.NombreEtiqueta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profesor.Fullname)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Facilidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apoyo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Claridad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Recomienda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Puntaje)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profesor.Fullname)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCalificacion">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCalificacion">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Facilidad)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apoyo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Claridad)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Estado)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Recomienda)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comentario)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Profesor.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Puntaje)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Facilidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apoyo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Claridad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Recomienda)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comentario)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Editar</a> |
+                        @*<a asp-action="Details" asp-route-id="@item.IdCalificacion">Details</a> |*@
+                        <a asp-action="Delete" asp-route-id="@item.IdCalificacion">Eliminar</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
