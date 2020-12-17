@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<UI.Models.Calificacion>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_LayoutHome";
@@ -96,15 +93,3 @@
     </tbody>
 </table>
 
-@*Filtro de Búsqueda*@
-<script>
-    $(document).ready(function () {
-        $("#miBusqueda").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#miTabla tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-
-    });
-</script>

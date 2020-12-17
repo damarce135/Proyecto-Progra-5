@@ -30,6 +30,8 @@ namespace UI.Models
 
         [Display(Name = "Recomendado")]
         public bool Recomienda { get; set; }
+
+        [Display(Name = "Promedio")]
         public byte? Puntaje { get; set; }
 
         public virtual Carrera Carrera { get; set; }

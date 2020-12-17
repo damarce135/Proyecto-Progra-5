@@ -86,7 +86,7 @@ namespace UI.Controllers
                     }
                 }
             }
-            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", curso.IdCarrera);
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera", curso.IdCarrera);
             return View(curso);
         }
 
@@ -103,7 +103,7 @@ namespace UI.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", curso.IdCarrera);
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera", curso.IdCarrera);
             return View(curso);
         }
 
@@ -152,7 +152,7 @@ namespace UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "IdCarrera", curso.IdCarrera);
+            ViewData["IdCarrera"] = new SelectList(GetAllCarreras(), "IdCarrera", "NombreCarrera", curso.IdCarrera);
             return View(curso);
         }
 
