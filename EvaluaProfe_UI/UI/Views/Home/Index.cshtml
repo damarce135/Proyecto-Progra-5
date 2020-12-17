@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<UI.Models.Calificacion>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_LayoutHome";
@@ -22,8 +24,8 @@
                 @Html.DisplayNameFor(model => model.Claridad)
             </th>
             @*<th>
-            @Html.DisplayNameFor(model => model.Estado)
-        </th>*@
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Comentario)
             </th>
@@ -48,48 +50,60 @@
     <tbody id="miTabla">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profesor.Fullname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Facilidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apoyo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Claridad)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Recomienda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Puntaje)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesor.Fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Facilidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apoyo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Claridad)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comentario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Recomienda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Puntaje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Carrera.NombreCarrera)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Curso.NombreCurso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Etiqueta.NombreEtiqueta)
+                </td>
 
-            @*<td>
-            <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.IdCalificacion">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.IdCalificacion">Delete</a>
-        </td>*@
-        </tr>
+                @*<td>
+                        <a asp-action="Edit" asp-route-id="@item.IdCalificacion">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdCalificacion">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdCalificacion">Delete</a>
+                    </td>*@
+            </tr>
         }
     </tbody>
 </table>
 
+-@*Filtro de Búsqueda*@
+<script>
+    $(document).ready(function () {
+        $("#miBusqueda").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#miTabla tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+    });
+</script>
